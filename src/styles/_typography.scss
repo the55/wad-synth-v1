@@ -1,0 +1,383 @@
+html,
+body,
+button,
+input,
+select,
+textarea {
+  color: $color-aztek;
+}
+
+body {
+  font-size: 1rem;
+  font-family: $font-primary;
+  color: $color-aztek;
+  font-weight: 400;
+  // white-space: pre-line; //Without this, new lines (\n) in JSON are ignored. But it adds space to the top of the page too...
+}
+
+a {
+  text-decoration: none;
+  color: $color-aztek;
+  &:hover {
+    color: $color-jellybean;
+    // SVGs inside paragraph links
+    i svg path {
+      fill: $color-jellybean;
+    }
+  }
+}
+
+/*----------  Homepage Display Typography  ----------*/
+
+// .display {
+//   font: 900 calc(0.75rem + 5vw) / 1.2 $font-two; // The weird calc() allows the font-size to be both fluid and resizable by the user
+//   letter-spacing: 0.02em;
+//   @include for-tablet-portrait-up {
+//     font-size: calc(1.25rem + 5vw);
+//   }
+//   @include for-tablet-landscape-up {
+//     font-size: calc(2rem + 5vw);
+//   }
+//   @include for-desktop-up {
+//     font-size: 6rem;
+//   }
+// }
+
+// .displaySmall {
+//   font: 700 calc(1rem + 1.5vw) / 1.2 $font-two; // The weird calc() allows the font-size to be both fluid and resizable by the user
+//   margin: 0 0.3%; // some pseudo-text justification
+//   &:nth-child(4) {
+//     margin-right: 0;
+//   }
+//   @include for-tablet-portrait-up {
+//     font-size: calc(1.5rem + 2vw);
+//   }
+//   @include for-tablet-landscape-up {
+//     font-size: calc(2rem + 2vw);
+//   }
+//   @include for-desktop-up {
+//     margin: 0 1.6%; // some pseudo-text justification
+//     font-size: 3.75rem;
+//   }
+// }
+
+h1,
+.h1,
+%h1 {
+  // font: 700 calcRem(56) / calc(64 / 56) $font-two;
+  font: 700 calcRem(48) / calc(56 / 48) $font-two;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+  @include for-tablet-portrait-up {
+    font-size: calcRem(72);
+    line-height: calc(80 / 72);
+  }
+  @include for-tablet-landscape-up {
+    font-size: calcRem(80);
+    line-height: calc(88 / 80);
+  }
+}
+
+// .h1menu,
+// %h1menu {
+//   font: 700 calcRem(48) / calc(56 / 48) $font-two;
+//   text-transform: uppercase;
+//   letter-spacing: 0.02em;
+//   margin: 0;
+//   @include for-tablet-portrait-up {
+//     font-size: calcRem(64);
+//     line-height: calc(72 / 64);
+//   }
+//   @include for-tablet-landscape-up {
+//     font-size: calcRem(72);
+//     line-height: calc(80 / 72);
+//   }
+//   &:hover a {
+//     background: none !important;
+//   }
+// }
+
+// .h1Question,
+// %h1Question {
+//   font: 700 calcRem(40) / calc(48 / 40) $font-primary;
+//   text-transform: none;
+//   letter-spacing: 0;
+//   margin: 0;
+// }
+
+h2,
+.h2,
+%h2 {
+  font: 700 calcRem(24) / calc(32 / 24) $font-two;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+  @include for-tablet-portrait-up {
+    font: 700 calcRem(32) / calc(40 / 32) $font-two;
+  }
+}
+
+// .h2Home {
+//   font: 900 calcRem(30) / calc(40 / 30) $font-two;
+//   text-transform: uppercase;
+//   letter-spacing: 0.02em;
+//   margin: 0;
+// }
+
+// .h2small {
+//   font: 700 calcRem(22) / calc(30 / 22) $font-two;
+//   text-transform: uppercase;
+//   letter-spacing: 0.04em;
+//   margin: 0;
+//   position: relative;
+// }
+
+h3,
+.h3,
+%h3 {
+  font: 600 calcRem(24) / calc(32 / 24) $font-primary;
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 0;
+  @include for-tablet-landscape-up {
+    font: 600 calcRem(28) / calc(36 / 28) $font-primary;
+  }
+}
+
+h4,
+.h4,
+%h4 {
+  font: 600 calcRem(22) / calc(32 / 22) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+h5,
+.h5,
+%h5 {
+  font: 600 calcRem(16) / calc(24 / 16) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+h6,
+.h6,
+%h6 {
+  font: 600 calcRem(16) / calc(16 / 16) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+  @include for-tablet-landscape-up {
+    font: 600 calcRem(15) / calc(16 / 15) $font-primary;
+  }
+}
+
+// .lede,
+// %lede {
+//   font: 700 calcRem(21) / calc(28 / 21) $font-primary;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   margin: 0;
+// }
+
+p,
+.p,
+%p {
+  font: 400 calcRem(18) / calc(28 / 18) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+  a {
+    text-decoration: underline;
+  }
+  // strong {
+  //   font-weight: 700;
+  // }
+}
+
+p + p {
+  margin: calcRem(18) 0 0 0;
+}
+
+// p a {
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// }
+
+li {
+  font: 400 calcRem(18) / calc(28 / 18) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+// .caption,
+// %caption {
+//   font: 400 calcRem(16) / calc(22 / 16) $font-primary;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   margin: 0;
+// }
+
+.fontSmall,
+%fontSmall {
+  font: 400 calcRem(16) / calc(24 / 16) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  // margin: 0;
+  // strong {
+  //   font-weight: 600;
+  // }
+}
+
+.fontSmaller,
+%fontSmaller {
+  font: 400 calcRem(15) / calc(20 / 15) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  // margin: 0;
+  // strong {
+  //   font-weight: 600;
+  // }
+}
+
+.fontTiny,
+%fontTiny {
+  font: 400 calcRem(12) / calc(16 / 12) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0 0 1rem 0;
+  // strong {
+  //   font-weight: 600;
+  // }
+}
+
+.nav1,
+%nav1 {
+  font: 500 calcRem(15) / calc(24 / 15) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+.nav2,
+%nav2 {
+  font: 400 calcRem(14) / calc(16 / 14) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+// .tabNav,
+// %tabNav {
+//   font: 600 calcRem(12) / calc(12 / 12) $font-primary;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   text-align: center;
+//   margin: 0;
+// }
+
+.buttonText,
+%buttonText {
+  font: 600 calcRem(18) / calc(22 / 18) $font-primary;
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: center;
+  // margin: 0; // Margin 0 is disabled here because prevented properly positioning the Next Buttons
+  @include for-tablet-landscape-up {
+    // font: 600 calcRem(20) / calc(16 / 16) $font-primary;
+  }
+}
+// .metaTitle,
+// %metaTitle {
+//   font: 600 calcRem(18) / calc(20 / 18) $font-two;
+//   text-transform: uppercase;
+//   letter-spacing: 0.07em;
+//   position: relative;
+//   // margin: 0;
+// }
+
+// .meta1,
+// %meta1 {
+//   font: 600 calcRem(15) / calc(20 / 15) $font-two;
+//   text-transform: uppercase;
+//   letter-spacing: 0.07em;
+//   position: relative;
+//   // margin: 0;
+// }
+
+// .meta2,
+// %meta2 {
+//   font: 600 calcRem(14) / calc(16 / 14) $font-two;
+//   text-transform: none;
+//   letter-spacing: 0.07em;
+//   margin: 0;
+//   @include for-tablet-landscape-up {
+//     font: 600 calcRem(13) / calc(16 / 13) $font-two;
+//   }
+// }
+
+/* ----------------------------
+Color Helpers
+---------------------------- */
+
+// .textColor1 {
+//   color: $color-cerulean;
+// }
+
+// .textColorMatisse {
+//   color: $color-matisse;
+// }
+
+// .textColorBayou {
+//   color: $color-bayou;
+// }
+
+// .textColorBalihai {
+//   color: $color-balihai;
+// }
+
+// .textColorBiscay {
+//   color: $color-biscay;
+// }
+
+// .textColorRockblue {
+//   color: $color-rockblue;
+// }
+
+// .textColorCarmine {
+//   color: $color-carmine;
+// }
+
+.textColorWhite {
+  color: $color-white;
+  -webkit-font-smoothing: antialiased; // Prevent white text looking too bold in Chrome
+}
+
+/* ----------------------------
+Weight & Style Helpers
+---------------------------- */
+
+.semibold {
+  font-weight: 600;
+}
+
+strong,
+.strong {
+  font-weight: 700;
+}
+
+.extrabold {
+  font-weight: 800;
+}
+
+.noDecoration {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

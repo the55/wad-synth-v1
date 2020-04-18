@@ -1,0 +1,119 @@
+/* Variables */
+
+/* ----------------------------
+Fonts
+---------------------------- */
+$font-primary: sofia-pro, Helvetica, Arial, sans-serif;
+$font-two: urw-din-condensed, Helvetica, Arial, sans-serif;
+// $font-three: urw-din, Helvetica, Arial, sans-serif;
+
+// Default font size
+// $font-base: 16px; // Set on html in _base.scss,
+$base-value: 16; // Should be the same as $font-base, but without a unit. Used in mixins and functions to calculate Rem
+
+/* ----------------------------
+Colors
+---------------------------- */
+
+// <hr> color
+$hr-color: #ccc;
+
+// Synth 4/15
+// Keyboard
+// --- Keyboard Background
+$color-prussian100: hsla(224, 100, 18, 1); // #00185A
+$color-prussian50: hsla(224, 100, 18, 0.5);
+$color-prussian10: hsla(224, 100, 18, 0.1);
+
+// --- Keyboard Elements
+$color-blueribbon100: hsla(224, 96, 59, 1); // #3368FB
+$color-blueribbon50: hsla(224, 96, 59, 0.5);
+$color-blueribbon15: hsla(224, 96, 59, 0.15);
+
+// --- Keyboard Text
+$color-dodgerblue100: hsla(224, 100, 66, 1); // #5280FF
+
+// Synth 4/12
+// Darks
+$color-shark: hsla(241, 2, 15, 1);
+
+// Reds
+$color-punch: hsla(5, 70, 53, 1);
+
+// Blues
+$color-aztek: hsla(208, 72, 15, 1); // #0B2943 Main font color
+$color-biscay: hsla(208, 66, 23, 1); // #143D61 Contextual menus and some text
+$color-matisse: hsla(208, 64, 36, 1); // #216097 Most blue fonts and background
+$color-jellybean: hsla(208, 63, 41, 1); // #276DAA Link and button hover
+// $color-poloblue: hsla(208, 48, 72, 1);
+$color-malibu: hsla(208, 68, 93, 1); // #E1EEF9 Nav button hover background
+
+$color-mariner: hsla(208, 75, 44, 1); // #1C76C4 Only used for the Focus Outline
+
+// Gray-Blues
+$color-bayou: hsla(
+  208,
+  29,
+  35,
+  1
+); // #405C74 Some text where I wanted less contrast
+$color-balihai: hsla(
+  208,
+  30,
+  51,
+  1
+); // #5D84A7 Lighter font in the home page hero
+$color-rockblue: hsla(208, 33, 69, 1); // #96B2CA Some backgrounds and borders
+$color-botticelli: hsla(
+  208,
+  38,
+  84,
+  1
+); // #C7D7E6 Rules/borders in the navigation and question list
+$color-athens: hsla(208, 30, 91, 1); // #E1E9EF backgrounds
+
+// Reds
+$color-carmine: hsla(360, 51, 45, 1); // #AF3939 Red text, buttons, svgs
+$color-chestnut: hsla(360, 48, 50, 1); // #BD4242 Red button hover
+$color-rose: hsla(360, 57, 59, 1); // #D25C5C A few accents
+
+// Others
+$color-surf: hsla(166, 77, 29, 1); // #118368 Correct answer things
+$color-white: hsla(0, 0, 100, 1);
+
+// Text selection background color
+$selection-color: $color-malibu; // referenced in _base
+
+/* ----------------------------
+Margins and Grid 
+---------------------------- */
+// Referenced in _mixins.scss
+$default-page-width: 90%;
+$default-grid-gap: 1.5rem;
+
+/* ----------------------------
+Element Styles
+---------------------------- */
+
+// Border Radius
+$radius-tiny: 0.1875rem;
+$radius-small: 0.5rem;
+$radius-medium: 0.75rem;
+$radius-big: 1rem;
+$radius-bigger: 1.5rem;
+$radius-super: 2.5rem;
+$radius-pill: 10rem;
+
+//Shadows
+$box-shadow-big: 0 10px 40px -5px hsla(208, 29, 35, 0.4);
+// $box-shadow-small: 0 5px 20px -5px hsla(208, 20, 34, 0.4),
+//   0 2px 2px -2px hsla(208, 20, 34, 0.4);
+$box-shadow-small: 0 12px 30px -10px hsla(208, 29, 35, 0.4),
+  0 2px 2px -2px hsla(208, 29, 35, 0.4);
+$box-shadow-tiny: 0 2px 2px 0 hsla(208, 29, 35, 0.3);
+$box-shadow-tab-bar: 0 0px 15px 0 hsla(208, 29, 35, 0.3),
+  0 -4px 2px -4px hsla(208, 29, 35, 0.3);
+$box-shadow-question: 0 4px 10px 0px hsla(208, 29, 35, 0.1),
+  0 2px 4px -2px hsla(208, 29, 35, 0.2);
+$text-shadow: 0 0 0.75rem hsla(208, 29, 35, 0.3);
+$inset-shadow: inset 0 0 0.75rem hsla(208, 29, 35, 0.3);

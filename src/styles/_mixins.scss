@@ -1,0 +1,98 @@
+/* Mixins and Functions */
+
+/* ----------------------------
+PX to REM 
+---------------------------- */
+
+// Convert px to rem for a single value, like font shorthand
+@function calcRem($size) {
+  $remSize: $size / $base-value;
+  @return #{$remSize}rem;
+}
+
+// Convert px to rem, for multiple values, like padding
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@mixin propRem($property, $values...) {
+  $max: length($values);
+  $remValues: '';
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    @if $value > 0 {
+      $remValues: #{$remValues + $value/$base-value}rem;
+    } @else {
+      $remValues: #{$remValues + $value/$base-value};
+    }
+
+    @if $i < $max {
+      $remValues: #{$remValues + ' '};
+    }
+  }
+
+  #{$property}: $remValues;
+}
+
+/* ----------------------------
+Breakpoints 
+---------------------------- */
+@mixin for-small-phone-only {
+  @media (max-width: 359px) {
+    @content;
+  }
+}
+
+@mixin for-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin for-tablet-portait-only {
+  @media (min-width: 600px) and (max-width: 899px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-only {
+  @media (min-width: 900px) and (max-width: 1199px) {
+    @content;
+  }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin for-desktop-only {
+  @media (min-width: 1200px) and (max-width: 1799px) {
+    @content;
+  }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}
+
+/* 
+----------------------------
+Margins and Grid 
+----------------------------
+*/
+//Set page margin
+@mixin page-margins($width: $default-page-width) {
+  width: $width;
+  margin-left: auto;
+  margin-right: auto;
+}

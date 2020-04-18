@@ -1,0 +1,312 @@
+@import './typography';
+
+img {
+  display: block;
+  object-fit: cover;
+  // width: auto;
+  height: auto;
+  max-width: 100%;
+  // max-height: 100%;
+}
+
+.inlineIcon {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: text-bottom;
+}
+
+// .btn-reset {
+//   appearance: none;
+//   background: transparent;
+//   padding: 0;
+//   border: 0;
+//   cursor: pointer;
+//   &:focus {
+//     outline: 0;
+//   }
+// }
+
+button,
+.button,
+%button {
+  display: block;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: $radius-medium;
+  @extend %buttonText;
+  text-decoration: none;
+  background: $color-white;
+  color: $color-aztek;
+  pointer-events: auto;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0s ease-in-out, transform 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+// .buttonNext,
+// %buttonNext {
+//   position: relative;
+//   width: calc(100% - 2rem);
+//   margin: 0 auto 1rem 1rem;
+//   background: $color-matisse;
+//   color: $color-white;
+//   border-radius: $radius-pill;
+//   transition: transform 0.2s, background 0.2s;
+//   box-shadow: $box-shadow-small;
+//   -webkit-font-smoothing: antialiased; // Prevent white text looking too bold in Chrome
+//   @include for-tablet-landscape-up {
+//     width: calc(71.43% - 2rem);
+//   }
+//   &:hover {
+//     color: $color-white;
+//     background: $color-jellybean;
+//   }
+// }
+
+// .buttonNextTest,
+// %buttonNextTest {
+//   position: fixed;
+//   width: calc(100% - 2rem);
+//   left: 1rem;
+//   bottom: calcRem(108);
+//   background: $color-matisse;
+//   color: $color-white;
+//   border-radius: $radius-pill;
+//   transition: transform 0.2s, background 0.2s;
+//   box-shadow: $box-shadow-small;
+//   -webkit-font-smoothing: antialiased; // Prevent white text looking too bold in Chrome
+//   z-index: 10;
+//   @include for-tablet-landscape-up {
+//     width: 60%;
+//     bottom: 4rem;
+//     left: 50%;
+//     transform: translateX(-50%);
+//   }
+//   &:hover {
+//     color: $color-white;
+//     background: $color-jellybean;
+//   }
+// }
+
+// .buttonSubmit {
+//   position: relative;
+//   width: 100%;
+//   margin: 0 auto;
+//   background: $color-bayou;
+//   color: $color-white;
+//   border-radius: $radius-pill;
+//   transition: transform 0.2s, background 0.2s;
+//   box-shadow: $box-shadow-small;
+//   -webkit-font-smoothing: antialiased; // Prevent white text looking too bold in Chrome
+//   @include for-tablet-portrait-up {
+//     min-width: 75%;
+//     width: auto;
+//   }
+//   @include for-tablet-landscape-up {
+//     // width: calc(71.43% - 2rem);
+//     min-width: 60%;
+//   }
+//   &:hover {
+//     color: $color-white;
+//     background: $color-biscay;
+//   }
+// }
+
+// .buttonIncorrectDisabled {
+//   opacity: 0.7;
+//   box-shadow: none;
+//   cursor: default;
+//   &:hover {
+//     transform: none;
+//   }
+// }
+
+// .buttonCorrectDisabled {
+//   opacity: 1;
+//   cursor: default;
+//   &:hover {
+//     transform: none;
+//   }
+// }
+
+// .navBtnBg {
+//   // @include for-tablet-landscape-up {
+//   border-radius: 10rem;
+//   &:hover {
+//     background: $color-malibu;
+//   }
+//   // }
+// }
+
+// .hotspotLoading {
+//   opacity: 0; // Prevent a flash of an unstyled button
+// }
+
+// .hotspot {
+//   display: block;
+//   opacity: 1;
+//   width: 2rem;
+//   height: 2rem;
+//   border-radius: $radius-pill;
+//   padding: 0;
+//   background: linear-gradient($color-white, $color-athens);
+//   color: $color-matisse;
+//   border: 2px solid $color-matisse;
+//   line-height: 1;
+//   transition: transform 0.2s;
+//   transform-origin: center center;
+//   text-align: center;
+//   &:hover {
+//     transform: scale(1.2);
+//     // background: $color-malibu;
+//     color: $color-matisse;
+//     z-index: 5;
+//   }
+//   // Expirmenting with making the clickable area bigger than the visible button
+//   &:before {
+//     content: '';
+//     position: absolute;
+//     left: -0.5rem;
+//     top: -0.5rem;
+//     width: 3rem;
+//     height: 3rem;
+//     border-radius: 3rem;
+//     // background: #e83474;
+//     /*Other styles*/
+//   }
+// }
+
+// .hotspotActive,
+// .hotspotActive:hover {
+//   color: $color-carmine;
+//   border: 2px solid $color-carmine;
+// }
+
+// button:focus {
+//   outline:0;
+// }
+
+/* Remove outline for non-keyboard :focus */
+// *:focus:not(.focus-visible) {
+//   outline: none;
+// }
+
+/* Optional: Customize .focus-visible */
+// .focus-visible {
+//   outline-color: lightgreen;
+// }
+
+hr {
+  border-top: 2px solid $color-aztek;
+  margin: 1rem 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+/* ----------------------------
+Shadows
+---------------------------- */
+.shadowBig,
+%shadowBig {
+  box-shadow: $box-shadow-big;
+}
+
+.shadowSmall,
+%shadowSmall {
+  box-shadow: $box-shadow-small;
+}
+
+.shadowTiny,
+%shadowTiny {
+  box-shadow: $box-shadow-tiny;
+}
+
+.shadowTabBar,
+%shadowTabBar {
+  box-shadow: $box-shadow-tab-bar;
+}
+
+.shadowQuestion,
+%shadowQuestion {
+  box-shadow: $box-shadow-question;
+}
+
+.textShadow {
+  text-shadow: $text-shadow;
+}
+
+/* ----------------------------
+Colors
+---------------------------- */
+
+// .bgColorMatisse {
+//   background: $color-matisse !important;
+// }
+
+// .svgColorAztek {
+//   svg path {
+//     fill: $color-aztek;
+//   }
+// }
+
+// button {
+//   &:hover {
+//     .svgColorAztek {
+//       svg path {
+//         fill: $color-jellybean;
+//       }
+//     }
+//   }
+// }
+
+// .svgColorMatisse {
+//   svg path {
+//     fill: $color-matisse;
+//   }
+// }
+
+/* ----------------------------
+Rules / Underlines - 
+---------------------------- */
+// Used with star rule SVG
+// .starRule {
+//   width: calc(100% - 2rem);
+//   margin: 2.5rem auto 2rem;
+//   @include for-tablet-landscape-up {
+//     width: 60%;
+//     margin: 3rem auto;
+//   }
+// }
+
+// .shortRuleRedLeft {
+//   &::after {
+//     content: '';
+//     display: block;
+//     width: 2.5rem;
+//     height: 0.125rem;
+//     position: absolute;
+//     bottom: 0;
+//     background-color: $color-rose;
+//   }
+// }
+
+// .shortRuleRedCenter {
+//   &::after {
+//     content: '';
+//     display: block;
+//     width: 2.5rem;
+//     height: 0.125rem;
+//     position: absolute;
+//     bottom: 0;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     background-color: $color-rose;
+//   }
+// }
