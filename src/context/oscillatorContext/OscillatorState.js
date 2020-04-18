@@ -13,14 +13,15 @@ const OscillatorState = (props) => {
   const initialState = {
     oscillatorOutput: [
       {
-        oscId: 'osc1',
+        oscId: '1',
         source: 'sawtooth',
         volume: 0.3, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
         detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
         // pitch: 'A3', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
         env: {
-          // This is the ADSR envelope.
+          // Init settings for the Volume envelope.
+          // These are overridden when a note plays by VolumeEnvelope.js
           attack: 0.0, // Time in seconds from onset to peak volume.  Common values for oscillators may range from 0.05 to 0.3.
           decay: 0.0, // Time in seconds from peak volume to sustain volume.
           sustain: 1.0, // Sustain volume level. This is a percent of the peak volume, so sensible values are between 0 and 1.
@@ -29,14 +30,15 @@ const OscillatorState = (props) => {
         },
       },
       {
-        oscId: 'osc2',
+        oscId: '2',
         source: 'sawtooth',
         volume: 0.3, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
         detune: -10, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
         // pitch: 'A3', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
         env: {
-          // This is the ADSR envelope.
+          // Init settings for the Volume envelope.
+          // These are overridden when a note plays by VolumeEnvelope.js
           attack: 0.0, // Time in seconds from onset to peak volume.  Common values for oscillators may range from 0.05 to 0.3.
           decay: 0.0, // Time in seconds from peak volume to sustain volume.
           sustain: 1.0, // Sustain volume level. This is a percent of the peak volume, so sensible values are between 0 and 1.
@@ -45,14 +47,15 @@ const OscillatorState = (props) => {
         },
       },
       {
-        oscId: 'osc3',
+        oscId: '3',
         source: 'square',
         volume: 0.3, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
         detune: -20, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
         // pitch: 'A3', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
         env: {
-          // This is the ADSR envelope.
+          // Init settings for the Volume envelope.
+          // These are overridden when a note plays by VolumeEnvelope.js
           attack: 0.0, // Time in seconds from onset to peak volume.  Common values for oscillators may range from 0.05 to 0.3.
           decay: 0.0, // Time in seconds from peak volume to sustain volume.
           sustain: 1.0, // Sustain volume level. This is a percent of the peak volume, so sensible values are between 0 and 1.
