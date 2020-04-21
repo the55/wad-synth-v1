@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import VolumeEnvelopeContext from '../../context/volumeEnvelopeContext/volumeEnvelopeContext';
 import OscillatorContext from '../../context/oscillatorContext/oscillatorContext';
-import { scaleLog, scalePow } from 'd3-scale';
+import { scalePow } from 'd3-scale';
 import SliderTime from '../uiElements/SliderTime';
 import SliderLevel from '../uiElements/SliderLevel';
+import styles from './VolumeEnvelope.module.scss';
 
 const VolumeEnvelope = () => {
   const volumeEnvelopeContext = useContext(VolumeEnvelopeContext);
@@ -38,12 +39,6 @@ const VolumeEnvelope = () => {
 
   let newSliderScale;
   let scaledValue;
-  // const newSliderScale = (min, max) => {
-  //   return (newScale = scalePow()
-  //     .range([min, max])
-  //     .domain([min, max])
-  //     .exponent(3));
-  // };
   const getScaledValue = (min, max, value, exponent) => {
     newSliderScale = scalePow()
       .range([min, max])
@@ -112,7 +107,7 @@ const VolumeEnvelope = () => {
   };
 
   return (
-    <div>
+    <div className={`${styles.volumeEnvelopeContainer}`}>
       <h2>Volume Envelope</h2>
       <SliderTime
         label={volumeEnvelopeAttack.label}
@@ -157,6 +152,8 @@ const VolumeEnvelope = () => {
         scaledValue={volumeEnvelopeSustain.scaledValue}
         onChange={handleSustain}
         disabled={disabled}
+        multiplier={100}
+        decimal={0}
       />
 
       {/* <SliderTime

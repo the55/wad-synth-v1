@@ -15,7 +15,10 @@ const Keyboard = () => {
   const oscillatorContext = useContext(OscillatorContext);
 
   const {
+    oscillators,
+    notePitch,
     setNotePitch,
+    setOscillatorPitch,
     notePlaying,
     setNotePlaying,
     setNoteVolume,
@@ -134,7 +137,7 @@ const Keyboard = () => {
 
   // Do stuff when a key is pressed
   const handleQwertyNoteOn = (e) => {
-    // If there's not a note currently planing, just play the new note
+    // If there's not a note currently playing, just play the new note
     if (qwertyPressedRef.current === null) {
       setQwertyPressed(e.key);
     }
@@ -150,13 +153,30 @@ const Keyboard = () => {
   };
 
   // Get the note values and update the context
+  // async function playThisNote(keyName) {
+  //   await setNotePitch(keyName); // First, set the Pitch
+  //   // await setNoteVolume(0.3); // TODO: Make sure this works with Oscillator volumes
+  //   await setNotePlaying(true); // Then set playing to True
+  // }
+
   async function playThisNote(keyName) {
-    await setNotePitch(keyName); // First, set the Pitch
-    await setNoteVolume(0.3);
+    let frequency;
+    // If the qwerty note (keyName) matches a note in Wad.pitches, get the note's frequency value
+    Object.entries(Wad.pitches).map(([key, value]) => {
+      if (key === keyName) {
+        return (frequency = value);
+      } else {
+        return false;
+      }
+    });
+    await oscillators.map(
+      (oscillator) =>
+        setOscillatorPitch(oscillator.id, frequency * oscillator.octave) // Update each oscillator's pitch with the played frequency multiplied by that oscillator's octave value
+    );
+    // await setNoteVolume(0.3); // TODO: Make sure this works with Oscillator volumes
     await setNotePlaying(true); // Then set playing to True
   }
 
-  // Watch for changes in qwertyPressed, and play the appropriate note
   useEffect(() => {
     // Make sure the notes loaded, that a key has been pressed, and that there isn't a note already playing
     if (qwertyNotes && qwertyPressed !== null && !notePlaying) {

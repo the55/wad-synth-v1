@@ -1,22 +1,101 @@
 import {
-  SET_OSCILLATOR_OUTPUT,
+  SET_OSCILLATORS,
+  SET_OSCILLATOR_VOLUME,
+  SET_OSCILLATOR_PITCH,
+  SET_OSCILLATOR_OCTAVE,
+  SET_OSCILLATOR_DETUNE_COARSE,
+  SET_OSCILLATOR_DETUNE_FINE,
   SET_NOTE_PITCH,
   SET_NOTE_PLAYING,
   SET_NOTE_VOLUME,
-  SET_OSCILLATOR_HOLD,
 } from './oscillatorTypes';
 
 export default (state, action) => {
   switch (action.type) {
-    case SET_OSCILLATOR_OUTPUT:
+    case SET_OSCILLATORS:
       return {
         ...state,
-        oscillatorOutput: action.payload,
+        oscillators: action.payload,
+      };
+    case SET_OSCILLATOR_VOLUME:
+      return {
+        ...state,
+        oscillators: state.oscillators.map((oscillator) =>
+          oscillator.id === action.payload.oscillatorId
+            ? {
+                ...oscillator,
+                volume: action.payload.scaledValue,
+                volumeControl: {
+                  ...oscillator.volumeControl,
+                  sliderValue: action.payload.sliderValue,
+                  scaledValue: action.payload.scaledValue,
+                },
+              }
+            : oscillator
+        ),
+      };
+    case SET_OSCILLATOR_PITCH:
+      return {
+        ...state,
+        oscillators: state.oscillators.map((oscillator) =>
+          oscillator.id === action.payload.oscillatorId
+            ? {
+                ...oscillator,
+                pitch: action.payload.pitch,
+              }
+            : oscillator
+        ),
+      };
+    case SET_OSCILLATOR_OCTAVE:
+      return {
+        ...state,
+        oscillators: state.oscillators.map((oscillator) =>
+          oscillator.id === action.payload.oscillatorId
+            ? {
+                ...oscillator,
+                octave: action.payload.octave,
+              }
+            : oscillator
+        ),
+      };
+    case SET_OSCILLATOR_DETUNE_COARSE:
+      return {
+        ...state,
+        oscillators: state.oscillators.map((oscillator) =>
+          oscillator.id === action.payload.oscillatorId
+            ? {
+                ...oscillator,
+                detune: action.payload.detuneValue,
+                detuneControlCoarse: {
+                  ...oscillator.detuneControlCoarse,
+                  sliderValue: action.payload.sliderValue,
+                  scaledValue: action.payload.scaledValue,
+                },
+              }
+            : oscillator
+        ),
+      };
+    case SET_OSCILLATOR_DETUNE_FINE:
+      return {
+        ...state,
+        oscillators: state.oscillators.map((oscillator) =>
+          oscillator.id === action.payload.oscillatorId
+            ? {
+                ...oscillator,
+                detune: action.payload.detuneValue,
+                detuneControlFine: {
+                  ...oscillator.detuneControlFine,
+                  sliderValue: action.payload.sliderValue,
+                  scaledValue: action.payload.scaledValue,
+                },
+              }
+            : oscillator
+        ),
       };
     // case SET_NOTE_PITCH:
     //   return {
     //     ...state,
-    //     oscillatorOutput: state.oscillatorOutput.map((oscillator) => {
+    //     oscillators: state.oscillators.map((oscillator) => {
     //       return {
     //         ...oscillator,
     //         pitch: action.payload,
@@ -37,11 +116,6 @@ export default (state, action) => {
       return {
         ...state,
         noteVolume: action.payload,
-      };
-    case SET_OSCILLATOR_HOLD:
-      return {
-        ...state,
-        oscillatorHold: action.payload,
       };
     default:
       return state;

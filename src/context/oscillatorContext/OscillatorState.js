@@ -2,23 +2,57 @@ import React, { useReducer } from 'react';
 import OscillatorContext from './oscillatorContext';
 import oscillatorReducer from './oscillatorReducer';
 import {
-  SET_OSCILLATOR_OUTPUT,
+  SET_OSCILLATORS,
+  SET_OSCILLATOR_VOLUME,
+  SET_OSCILLATOR_PITCH,
+  SET_OSCILLATOR_OCTAVE,
+  SET_OSCILLATOR_DETUNE_COARSE,
+  SET_OSCILLATOR_DETUNE_FINE,
   SET_NOTE_PITCH,
   SET_NOTE_PLAYING,
-  SET_OSCILLATOR_HOLD,
   SET_NOTE_VOLUME,
 } from './oscillatorTypes';
 
 const OscillatorState = (props) => {
   const initialState = {
-    oscillatorOutput: [
+    oscillators: [
       {
-        oscId: '1',
+        id: 'osc1',
+        legend: '1',
         source: 'sawtooth',
-        volume: 0.3, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
+        volume: 0.8, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
+        volumeControl: {
+          id: 'osc1VolumeControl',
+          label: 'Volume',
+          min: 0.001,
+          max: 1,
+          step: 'any',
+          sliderValue: 0.8, // What the slider visually displays
+          scaledValue: 0.8, // Default output value. Updates may be scaled
+        },
+        pitch: 'A4', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
+        octave: '1',
         detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
+        detuneControlCoarse: {
+          id: 'osc1DetuneControlCoarse',
+          label: 'Detune Coarse',
+          min: -1200,
+          max: 1200,
+          step: 100,
+          sliderValue: 0.001, // What the slider visually displays
+          scaledValue: 0.001, // Default output value. Updates may be scaled
+        },
+        detuneControlFine: {
+          id: 'osc1DetuneControlFine',
+          label: 'Detune Fine',
+          min: -50.001,
+          max: 50.001,
+          step: 1,
+          sliderValue: 0.001, // What the slider visually displays
+          scaledValue: 0.001, // Default output value. Updates may be scaled
+        },
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
-        // pitch: 'A3', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
+
         env: {
           // Init settings for the Volume envelope.
           // These are overridden when a note plays by VolumeEnvelope.js
@@ -30,12 +64,42 @@ const OscillatorState = (props) => {
         },
       },
       {
-        oscId: '2',
+        id: 'osc2',
+        legend: '2',
         source: 'sawtooth',
-        volume: 0.3, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
-        detune: -10, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
+        volume: 0.8, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
+        volumeControl: {
+          id: 'osc2VolumeControl',
+          label: 'Volume',
+          min: 0.001,
+          max: 1,
+          step: 'any',
+          sliderValue: 0.8, // What the slider visually displays
+          scaledValue: 0.8, // Default output value. Updates may be scaled
+        },
+        pitch: 'A4', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
+        octave: '1',
+        detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
+        detuneControlCoarse: {
+          id: 'osc2DetuneControlCoarse',
+          label: 'Detune',
+          min: -1200,
+          max: 1200,
+          step: 100,
+          sliderValue: 0.001, // What the slider visually displays
+          scaledValue: 0.001, // Default output value. Updates may be scaled
+        },
+        detuneControlFine: {
+          id: 'osc2DetuneControlFine',
+          label: 'Detune Fine',
+          min: -50.0000000001,
+          max: 50.0000000001,
+          step: 1,
+          sliderValue: 0.0000000001, // What the slider visually displays
+          scaledValue: 0.0000000001, // Default output value. Updates may be scaled
+        },
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
-        // pitch: 'A3', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
+
         env: {
           // Init settings for the Volume envelope.
           // These are overridden when a note plays by VolumeEnvelope.js
@@ -47,12 +111,42 @@ const OscillatorState = (props) => {
         },
       },
       {
-        oscId: '3',
+        id: 'osc3',
+        legend: '3',
         source: 'square',
-        volume: 0.3, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
-        detune: -20, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
+        volume: 0.8, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
+        volumeControl: {
+          id: 'osc3VolumeControl',
+          label: 'Volume',
+          min: 0.001,
+          max: 1,
+          step: 'any',
+          sliderValue: 0.8, // What the slider visually displays
+          scaledValue: 0.8, // Default output value. Updates may be scaled
+        },
+        pitch: 'A4', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
+        octave: '1',
+        detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
+        detuneControlCoarse: {
+          id: 'osc2DetuneControlCoarse',
+          label: 'Detune',
+          min: -1200,
+          max: 1200,
+          step: 100,
+          sliderValue: 0.0000000001, // What the slider visually displays
+          scaledValue: 0.0000000001, // Default output value. Updates may be scaled
+        },
+        detuneControlFine: {
+          id: 'osc3DetuneControlFine',
+          label: 'Detune Fine',
+          min: -50.0000000001,
+          max: 50.0000000001,
+          step: 1,
+          sliderValue: 0.0000000001, // What the slider visually displays
+          scaledValue: 0.0000000001, // Default output value. Updates may be scaled
+        },
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
-        // pitch: 'A3', // Set a default pitch on the constructor if you don't want to set the pitch on <code>play()</code>.
+
         env: {
           // Init settings for the Volume envelope.
           // These are overridden when a note plays by VolumeEnvelope.js
@@ -64,7 +158,7 @@ const OscillatorState = (props) => {
         },
       },
     ],
-    notePitch: 'A2',
+    notePitch: null,
     notePlaying: false,
     noteVolume: 0,
   };
@@ -72,8 +166,58 @@ const OscillatorState = (props) => {
   //All of our actions involving state go below. The type of action is dispatched to the Reducer.
   const [state, dispatch] = useReducer(oscillatorReducer, initialState);
 
-  const setOscillatorOutput = (oscillatorOutputArray) => {
-    dispatch({ type: SET_OSCILLATOR_OUTPUT, payload: oscillatorOutputArray });
+  // I don't think this is being used, and can be deleted...
+  const setOscillators = (oscillatorsArray) => {
+    dispatch({ type: SET_OSCILLATORS, payload: oscillatorsArray });
+  };
+
+  // Set the volume of an oscillator
+  const setOscillatorVolume = (oscillatorId, sliderValue, scaledValue) => {
+    dispatch({
+      type: SET_OSCILLATOR_VOLUME,
+      payload: { oscillatorId, sliderValue, scaledValue },
+    });
+  };
+
+  // Set the oscillator pitch
+  const setOscillatorPitch = (oscillatorId, pitch) => {
+    dispatch({
+      type: SET_OSCILLATOR_PITCH,
+      payload: { oscillatorId, pitch },
+    });
+  };
+  // Set the oscillator octave value
+  const setOscillatorOctave = (oscillatorId, octave) => {
+    dispatch({
+      type: SET_OSCILLATOR_OCTAVE,
+      payload: { oscillatorId, octave },
+    });
+  };
+
+  // Set the coarse detune amount - moves detune by semitones
+  const setOscillatorDetuneCoarse = (
+    oscillatorId,
+    sliderValue,
+    scaledValue,
+    detuneValue
+  ) => {
+    dispatch({
+      type: SET_OSCILLATOR_DETUNE_COARSE,
+      payload: { oscillatorId, sliderValue, scaledValue, detuneValue },
+    });
+  };
+
+  // Set the fine detune amount - moves pitch by cents
+  const setOscillatorDetuneFine = (
+    oscillatorId,
+    sliderValue,
+    scaledValue,
+    detuneValue
+  ) => {
+    dispatch({
+      type: SET_OSCILLATOR_DETUNE_FINE,
+      payload: { oscillatorId, sliderValue, scaledValue, detuneValue },
+    });
   };
 
   const setNotePitch = (keyName) => {
@@ -88,22 +232,21 @@ const OscillatorState = (props) => {
     dispatch({ type: SET_NOTE_VOLUME, payload: num });
   };
 
-  const setOscillatorHold = (seconds) => {
-    dispatch({ type: SET_OSCILLATOR_HOLD, payload: seconds });
-  };
-
   return (
     <OscillatorContext.Provider
       value={{
-        oscillatorOutput: state.oscillatorOutput,
+        oscillators: state.oscillators,
         notePitch: state.notePitch,
         notePlaying: state.notePlaying,
         noteVolume: state.noteVolume,
-        oscillatorHold: state.oscillatorHold,
-        setOscillatorOutput,
+        setOscillators,
+        setOscillatorVolume,
+        setOscillatorPitch,
+        setOscillatorOctave,
+        setOscillatorDetuneCoarse,
+        setOscillatorDetuneFine,
         setNotePitch,
         setNotePlaying,
-        setOscillatorHold,
         setNoteVolume,
       }}
     >

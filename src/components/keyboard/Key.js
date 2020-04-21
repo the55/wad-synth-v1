@@ -1,10 +1,18 @@
 import React, { useContext, useEffect, createRef, useState } from 'react';
 import OscillatorContext from '../../context/oscillatorContext/oscillatorContext';
+import Wad from 'web-audio-daw';
 import styles from './Keyboard.module.scss';
 
 const Key = ({ index, keyName, windowWidth, currentOctave, keyNamesType }) => {
   const oscillatorContext = useContext(OscillatorContext);
-  const { setNotePitch, setNotePlaying, setNoteVolume } = oscillatorContext;
+  const {
+    oscillators,
+    setOscillatorPitch,
+    setNotePitch,
+    setNotePlaying,
+    setNoteVolume,
+    notePitch,
+  } = oscillatorContext;
 
   // Style the keys
   const keyIsAccidental = keyName.match(/#|b/); // Get the sharps and flats
@@ -96,10 +104,28 @@ const Key = ({ index, keyName, windowWidth, currentOctave, keyNamesType }) => {
     e.preventDefault();
   };
 
+  // The frequency of a note is set when the component mounts/has its keyName prop
+  const [frequency, setFrequency] = useState();
+
+  useEffect(() => {
+    Object.entries(Wad.pitches).map(([key, value]) => {
+      if (key === keyName) {
+        return setFrequency(value);
+      } else {
+        return false;
+      }
+    });
+  }, [keyName]);
+
   const handleNoteOn = (e) => {
     (async function playThisNote() {
-      await setNotePitch(keyName); // First, set the Pitch
-      await setNoteVolume(0.3);
+      // await setNotePitch(keyName); // First, set the Pitch
+      // await setNotePitch(frequency); // First, set the Pitch. Using the frequency instead of the keyName so that I can do math on it with the oscillator octave
+      await oscillators.map(
+        (oscillator) =>
+          setOscillatorPitch(oscillator.id, frequency * oscillator.octave) // Update each oscillator's pitch with the played frequency multiplied by that oscillator's octave value
+      );
+      // await setNoteVolume(0.3); // TODO: Make sure this works with Oscillator volumes
       await setNotePlaying(true); // Then set playing to True
     })();
   };

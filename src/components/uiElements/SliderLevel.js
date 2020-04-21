@@ -10,6 +10,8 @@ const SliderLevel = ({
   scaledValue,
   onChange,
   disabled,
+  multiplier,
+  decimal,
 }) => {
   return (
     <label htmlFor={id}>
@@ -29,7 +31,7 @@ const SliderLevel = ({
       {/* {scaledValue < 1
         ? `${(scaledValue * 1000).toFixed(0)} ms`
         : `${scaledValue.toFixed(1)} s`} */}
-      {(scaledValue * 100).toFixed(0)}
+      {(scaledValue * multiplier).toFixed(decimal)}
     </label>
   );
 };

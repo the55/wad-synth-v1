@@ -6,12 +6,7 @@ import VolumeEnvelopeContext from '../context/volumeEnvelopeContext/volumeEnvelo
 
 const Oscillators = () => {
   const oscillatorContext = useContext(OscillatorContext);
-  const {
-    oscillatorOutput,
-    notePlaying,
-    notePitch,
-    noteVolume,
-  } = oscillatorContext;
+  const { oscillators, notePlaying, notePitch, noteVolume } = oscillatorContext;
 
   const volumeEnvelopeContext = useContext(VolumeEnvelopeContext);
   const {
@@ -24,28 +19,29 @@ const Oscillators = () => {
 
   const [componentLoading, setComponentLoading] = useState(true);
 
-  const [osc1, osc2, osc3] = oscillatorOutput; // Destructure the oscillators into individual objects
+  const [osc1, osc2, osc3] = oscillators; // Destructure the oscillators into individual objects
 
   // Setup state for Wads.
   const [oscillator1Wad, setOscillator1Wad] = useState(new Wad(osc1));
   const [oscillator2Wad, setOscillator2Wad] = useState(new Wad(osc2));
   const [oscillator3Wad, setOscillator3Wad] = useState(new Wad(osc3));
 
+  // Update the Wads if their state changes
+  useEffect(() => {
+    setOscillator1Wad(new Wad(osc1));
+    setOscillator2Wad(new Wad(osc2));
+    setOscillator3Wad(new Wad(osc3));
+    // console.log(oscillator1Wad);
+  }, [osc1, osc2, osc3]);
+
   // Setup the PolyWad
   const [allOscillatorWads, setAllOscillatorWads] = useState(new Wad.Poly());
 
-  // Add the Wads to the PolyWad
-  useEffect(() => {
-    allOscillatorWads
-      .add(oscillator1Wad)
-      .add(oscillator2Wad)
-      .add(oscillator3Wad);
-  }, [oscillator1Wad, oscillator2Wad, oscillator3Wad, allOscillatorWads]);
-
   // Get the data for a note from the context
   const playArgs = {
-    volume: noteVolume,
-    pitch: notePitch,
+    // volume: noteVolume, // TODO: get this from each Oscillator volume
+    // volume: osc1.volume,
+    // pitch: notePitch,
     label: notePitch,
     env: {
       attack: volumeEnvelopeAttack.scaledValue,
@@ -61,21 +57,36 @@ const Oscillators = () => {
     // Playing state from the oscillator context
     if (notePlaying) {
       // PolyWad
+      // --- Add Wads to the PolyWad
+      allOscillatorWads
+        .add(oscillator1Wad)
+        .add(oscillator2Wad)
+        .add(oscillator3Wad);
+      // --- Play the PolyWad
       allOscillatorWads.play(playArgs);
 
       // // Try Individual Oscillators if the Poly Wad doesn't work right
       // oscillator1Wad.play(playArgs);
       // oscillator2Wad.play(playArgs);
       // oscillator3Wad.play(playArgs);
-    } else {
-      // // PolyWad
-      allOscillatorWads.stop(); // calling a general stop(). Stop(notePitch) has a bug where the note keeps playing very quietly, causing high cpu usage.
+    } else if (!notePlaying) {
+      // PolyWad
+      // --- Stop the PolyWad. Calling a general stop(). Stop(notePitch) has a bug where the note keeps playing very quietly, causing high cpu usage.
+      allOscillatorWads.stop();
+      // --- Remove the Wads from the PolyWad so that we don't get Wads added to Wads added to Wads
+      allOscillatorWads
+        .remove(oscillator1Wad)
+        .remove(oscillator2Wad)
+        .remove(oscillator3Wad);
+
+      // allOscillatorWads.remove(oscillator1Wad);
+      // setAllOscillatorWads(new Wad.Poly());
       // allOscillatorWads.setPitch(0);
       // allOscillatorWads.stop(notePitch);
       // allOscillatorWads.setVolume(0);
 
       // Try Individual Oscillators if the Poly Wad doesn't work right
-      // oscillator1Wad.stop(notePitch); // Really I need to stop the previous note before playing the new one
+      // oscillator1Wad.stop(); // Really I need to stop the previous note before playing the new one
       // TODO: A very low level of sound continues to play even after the volume envelope closes. .setPitch(0) seems to fix this. I want to do .setPitch(0) after the duration of the Oscillator release.
       // oscillator1Wad.setPitch(0);
       // oscillator1Wad.setVolume(0.0); // Doesn't really have an effect
@@ -87,26 +98,20 @@ const Oscillators = () => {
       // oscillator3Wad.setVolume(0.0);
     }
   }, [
-    allOscillatorWads,
-    oscillator1Wad,
-    oscillator2Wad,
-    oscillator3Wad,
-    notePitch,
+    // allOscillatorWads,
+    // oscillator1Wad,
+    // oscillator2Wad,
+    // oscillator3Wad,
+    // notePitch,
     notePlaying,
     // oscillatorHold,
     // noteVolume,
     // volumeEnvelopeAttack,
     // volumeEnvelopeDecay,
-    playArgs,
+    // playArgs,
   ]);
 
-  return (
-    <Fragment>
-      {/* <Oscillator oscillatorId={'osc1'} />
-      <Oscillator oscillatorId={'osc2'} />
-      <Oscillator oscillatorId={'osc3'} /> */}
-    </Fragment>
-  );
+  return <Fragment />;
 };
 
 export default Oscillators;
