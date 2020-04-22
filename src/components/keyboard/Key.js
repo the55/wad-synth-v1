@@ -3,7 +3,7 @@ import OscillatorContext from '../../context/oscillatorContext/oscillatorContext
 import Wad from 'web-audio-daw';
 import styles from './Keyboard.module.scss';
 
-const Key = ({ index, keyName, windowWidth, currentOctave, keyNamesType }) => {
+const Key = ({ index, keyName, windowWidth, keyboardOctave, keyNamesType }) => {
   const oscillatorContext = useContext(OscillatorContext);
   const {
     oscillators,
@@ -36,50 +36,50 @@ const Key = ({ index, keyName, windowWidth, currentOctave, keyNamesType }) => {
   const [qwertyLabel, setQwertyLabel] = useState('');
   useEffect(() => {
     switch (keyName) {
-      case `C${currentOctave}`:
+      case `C${keyboardOctave}`:
         setQwertyLabel('A');
         break;
-      case `C#${currentOctave}`:
+      case `C#${keyboardOctave}`:
         setQwertyLabel('W');
         break;
-      case `D${currentOctave}`:
+      case `D${keyboardOctave}`:
         setQwertyLabel('S');
         break;
-      case `D#${currentOctave}`:
+      case `D#${keyboardOctave}`:
         setQwertyLabel('E');
         break;
-      case `E${currentOctave}`:
+      case `E${keyboardOctave}`:
         setQwertyLabel('D');
         break;
-      case `F${currentOctave}`:
+      case `F${keyboardOctave}`:
         setQwertyLabel('F');
         break;
-      case `F#${currentOctave}`:
+      case `F#${keyboardOctave}`:
         setQwertyLabel('T');
         break;
-      case `G${currentOctave}`:
+      case `G${keyboardOctave}`:
         setQwertyLabel('G');
         break;
-      case `G#${currentOctave}`:
+      case `G#${keyboardOctave}`:
         setQwertyLabel('Y');
         break;
-      case `A${currentOctave}`:
+      case `A${keyboardOctave}`:
         setQwertyLabel('H');
         break;
-      case `A#${currentOctave}`:
+      case `A#${keyboardOctave}`:
         setQwertyLabel('U');
         break;
-      case `B${currentOctave}`:
+      case `B${keyboardOctave}`:
         setQwertyLabel('J');
         break;
-      case `C${+currentOctave + 1}`:
+      case `C${+keyboardOctave + 1}`:
         setQwertyLabel('K');
         break;
       default:
         setQwertyLabel('');
       //
     }
-  }, [keyName, currentOctave]);
+  }, [keyName, keyboardOctave]);
 
   const [keyLabel, setKeyLabel] = useState(``);
   useEffect(() => {

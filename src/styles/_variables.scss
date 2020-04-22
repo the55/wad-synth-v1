@@ -3,8 +3,11 @@
 /* ----------------------------
 Fonts
 ---------------------------- */
-$font-primary: sofia-pro, Helvetica, Arial, sans-serif;
-$font-two: urw-din-condensed, Helvetica, Arial, sans-serif;
+$font-normal: obviously, Helvetica, Arial, sans-serif;
+$font-wide: obviously-wide, Helvetica, Arial, sans-serif;
+$font-cond: obviously-condensed, Helvetica, Arial, sans-serif;
+$font-comp: obviously-compressed, Helvetica, Arial, sans-serif;
+// $font-two: urw-din-condensed, Helvetica, Arial, sans-serif;
 // $font-three: urw-din, Helvetica, Arial, sans-serif;
 
 // Default font size
@@ -19,6 +22,11 @@ Colors
 $hr-color: #ccc;
 
 // Synth 4/15
+// App
+// --- App Background
+$color-zodiac: hsla(224, 69, 15, 1); // #0C1A42
+$color-firefly: hsla(224, 62, 10, 1); // #0A1229
+
 // Keyboard
 // --- Keyboard Background
 $color-prussian100: hsla(224, 100, 18, 1); // #00185A

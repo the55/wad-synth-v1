@@ -3,6 +3,7 @@ import OscillatorContext from './oscillatorContext';
 import oscillatorReducer from './oscillatorReducer';
 import {
   SET_OSCILLATORS,
+  SET_OSCILLATOR_SOURCE,
   SET_OSCILLATOR_VOLUME,
   SET_OSCILLATOR_PITCH,
   SET_OSCILLATOR_OCTAVE,
@@ -19,7 +20,7 @@ const OscillatorState = (props) => {
       {
         id: 'osc1',
         legend: '1',
-        source: 'sawtooth',
+        source: 'triangle',
         volume: 0.8, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
         volumeControl: {
           id: 'osc1VolumeControl',
@@ -66,7 +67,7 @@ const OscillatorState = (props) => {
       {
         id: 'osc2',
         legend: '2',
-        source: 'sawtooth',
+        source: 'triangle',
         volume: 0.8, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
         volumeControl: {
           id: 'osc2VolumeControl',
@@ -113,7 +114,7 @@ const OscillatorState = (props) => {
       {
         id: 'osc3',
         legend: '3',
-        source: 'square',
+        source: 'triangle',
         volume: 0.8, // Peak volume can range from 0 to an arbitrarily high number, but you probably shouldn't set it higher than 1.
         volumeControl: {
           id: 'osc3VolumeControl',
@@ -128,7 +129,7 @@ const OscillatorState = (props) => {
         octave: '1',
         detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
         detuneControlCoarse: {
-          id: 'osc2DetuneControlCoarse',
+          id: 'osc3DetuneControlCoarse',
           label: 'Detune',
           min: -1200,
           max: 1200,
@@ -169,6 +170,14 @@ const OscillatorState = (props) => {
   // I don't think this is being used, and can be deleted...
   const setOscillators = (oscillatorsArray) => {
     dispatch({ type: SET_OSCILLATORS, payload: oscillatorsArray });
+  };
+
+  // Set the source/waveform of an oscillator
+  const setOscillatorSource = (oscillatorId, wave) => {
+    dispatch({
+      type: SET_OSCILLATOR_SOURCE,
+      payload: { oscillatorId, wave },
+    });
   };
 
   // Set the volume of an oscillator
@@ -240,6 +249,7 @@ const OscillatorState = (props) => {
         notePlaying: state.notePlaying,
         noteVolume: state.noteVolume,
         setOscillators,
+        setOscillatorSource,
         setOscillatorVolume,
         setOscillatorPitch,
         setOscillatorOctave,

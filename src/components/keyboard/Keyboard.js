@@ -32,7 +32,7 @@ const Keyboard = () => {
 
   const keyNames = Object.keys(Wad.pitches); // Get all the key names from Wad. This array includes both Sharp and Flat names, as well as notes that don't exist, like E#
 
-  const [currentOctave, setCurrentOctave] = useState('4'); // Default current octave
+  const [keyboardOctave, setKeyboardOctave] = useState('4'); // Default current octave
 
   // Get the window width. Used to determine whether a big or small logo is rendered.
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -82,8 +82,8 @@ const Keyboard = () => {
   };
 
   // Update the current Octave. Default is 4 (see above)
-  const handleSetCurrentOctave = (e) => {
-    setCurrentOctave(e.target.value);
+  const handleSetKeyboardOctave = (e) => {
+    setKeyboardOctave(e.target.value);
   };
 
   // Move the keyboard so that the current octave is centered
@@ -92,7 +92,7 @@ const Keyboard = () => {
   useEffect(() => {
     // Get the G key of the current octave
     let keyboardRefG = keyboardRef.current.querySelector(
-      `[data-keyname="G${currentOctave}"]`
+      `[data-keyname="G${keyboardOctave}"]`
     );
     // Do some math to move the keyboard so that the current G is in the middle of the viewport
     let tempKeyboardOffset = windowWidth / 2 - keyboardRefG.offsetLeft;
@@ -102,7 +102,7 @@ const Keyboard = () => {
     setTimeout(() => {
       setComponentLoading(false);
     }, 1000);
-  }, [componentLoading, keyboardRef, currentOctave, windowWidth]);
+  }, [componentLoading, keyboardRef, keyboardOctave, windowWidth]);
 
   const opacity = componentLoading ? '0' : '1';
 
@@ -110,21 +110,21 @@ const Keyboard = () => {
   const [qwertyNotes, setQwertyNotes] = useState();
   useEffect(() => {
     setQwertyNotes({
-      a: `C${currentOctave}`,
-      w: `C#${currentOctave}`,
-      s: `D${currentOctave}`,
-      e: `D#${currentOctave}`,
-      d: `E${currentOctave}`,
-      f: `F${currentOctave}`,
-      t: `F#${currentOctave}`,
-      g: `G${currentOctave}`,
-      y: `G#${currentOctave}`,
-      h: `A${currentOctave}`,
-      u: `A#${currentOctave}`,
-      j: `B${currentOctave}`,
-      k: `C${+currentOctave + 1}`,
+      a: `C${keyboardOctave}`,
+      w: `C#${keyboardOctave}`,
+      s: `D${keyboardOctave}`,
+      e: `D#${keyboardOctave}`,
+      d: `E${keyboardOctave}`,
+      f: `F${keyboardOctave}`,
+      t: `F#${keyboardOctave}`,
+      g: `G${keyboardOctave}`,
+      y: `G#${keyboardOctave}`,
+      h: `A${keyboardOctave}`,
+      u: `A#${keyboardOctave}`,
+      j: `B${keyboardOctave}`,
+      k: `C${+keyboardOctave + 1}`,
     });
-  }, [currentOctave]);
+  }, [keyboardOctave]);
 
   // If a physical key is pressed, store in the state
   // Need to use useRef in order to access the state in the event listeners
@@ -212,16 +212,16 @@ const Keyboard = () => {
     <div className={`${styles.keyboardComponent}`} ref={keyboardRef}>
       <h2>Keyboard</h2>
 
-      <label htmlFor="currentOctaveInput">
+      <label htmlFor="keyboardOctaveInput">
         OCT
         <input
           type="number"
-          id="currentOctaveInput"
-          name="currentOctaveInput"
+          id="keyboardOctaveInput"
+          name="keyboardOctaveInput"
           min="1"
           max="7"
-          value={currentOctave}
-          onChange={handleSetCurrentOctave}
+          value={keyboardOctave}
+          onChange={handleSetKeyboardOctave}
           onKeyDown={(e) => {
             // Disable key input except for the up and down arrows
             if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {
@@ -257,7 +257,7 @@ const Keyboard = () => {
                   key={index}
                   index={index}
                   keyName={keyName}
-                  currentOctave={currentOctave}
+                  keyboardOctave={keyboardOctave}
                   keyNamesType={keyNamesType}
                 />
               ))
@@ -266,7 +266,7 @@ const Keyboard = () => {
                   key={index}
                   index={index}
                   keyName={keyName}
-                  currentOctave={currentOctave}
+                  keyboardOctave={keyboardOctave}
                   keyNamesType={keyNamesType}
                 />
               ))}

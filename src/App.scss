@@ -9,3 +9,7 @@
 @import './styles/helpers'; // Hidden, iInline, Colors, Margins & Padding
 @import './styles/typography'; // Text styles and helpers
 @import './styles/elements'; // Defaults for img, buttons, hr, ul, etc
+
+body {
+  background: linear-gradient($color-zodiac, $color-firefly);
+}

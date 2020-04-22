@@ -9,12 +9,15 @@ import React, {
 import OscillatorContext from '../../context/oscillatorContext/oscillatorContext';
 import { scalePow } from 'd3-scale';
 import throttle from 'lodash.throttle';
+import OscillatorWaveSelect from './OscillatorWaveSelect';
+import OscillatorOctaveSelect from './OscillatorOctaveSelect';
 import SliderTime from '../uiElements/SliderTime';
 import SliderLevel from '../uiElements/SliderLevel';
 
 const Oscillator = ({ oscillator }) => {
   const oscillatorContext = useContext(OscillatorContext);
   const {
+    setOscillatorSource,
     setOscillatorVolume,
     setOscillatorOctave,
     setOscillatorDetuneCoarse,
@@ -27,6 +30,7 @@ const Oscillator = ({ oscillator }) => {
 
   const {
     id,
+    source,
     volume,
     volumeControl,
     detuneControlCoarse,
@@ -79,6 +83,56 @@ const Oscillator = ({ oscillator }) => {
   //     setOscillatorDetune(id, parseFloat(value), scaledValue);
   //   }, 50)
   // ).current;
+
+  // Set the source/waveform for an oscillator
+  const handleSelectWave = (e) => {
+    setOscillatorSource(id, e.target.value);
+    // switch (e.target.value) {
+    //   case 'triangle':
+    //     setOscillatorOctave(id, 0.25);
+    //     break;
+    //   case 'octaveMinus1':
+    //     setOscillatorOctave(id, 0.5);
+    //     break;
+    //   case 'octave0':
+    //     setOscillatorOctave(id, 1);
+    //     break;
+    //   case 'octavePlus1':
+    //     setOscillatorOctave(id, 2);
+    //     break;
+    //   case 'octavePlus2':
+    //     setOscillatorOctave(id, 4);
+    //     break;
+    //   default:
+    //   //
+    // }
+  };
+
+  // Transpose the pitch for different octave settings
+  const [octaveSelected, setOctaveSelected] = useState('octave0');
+
+  const handleSelectOctave = (e) => {
+    setOctaveSelected(e.target.value);
+    switch (e.target.value) {
+      case 'octaveMinus2':
+        setOscillatorOctave(id, 0.25);
+        break;
+      case 'octaveMinus1':
+        setOscillatorOctave(id, 0.5);
+        break;
+      case 'octave0':
+        setOscillatorOctave(id, 1);
+        break;
+      case 'octavePlus1':
+        setOscillatorOctave(id, 2);
+        break;
+      case 'octavePlus2':
+        setOscillatorOctave(id, 4);
+        break;
+      default:
+      //
+    }
+  };
 
   // Store the Detune values with useRef, so that the event handlers can access the current state
   // --- Detune Coarse State
@@ -134,94 +188,19 @@ const Oscillator = ({ oscillator }) => {
     }, 50)
   ).current;
 
-  // Transpose the pitch for different octave settings
-  const [octaveSelected, setOctaveSelected] = useState('octave0');
-
-  const handleSelectOctave = (e) => {
-    setOctaveSelected(e.target.value);
-    switch (e.target.value) {
-      case 'octaveMinus2':
-        setOscillatorOctave(id, 0.25);
-        break;
-      case 'octaveMinus1':
-        setOscillatorOctave(id, 0.5);
-        break;
-      case 'octave0':
-        setOscillatorOctave(id, 1);
-        break;
-      case 'octavePlus1':
-        setOscillatorOctave(id, 2);
-        break;
-      case 'octavePlus2':
-        setOscillatorOctave(id, 4);
-        break;
-      default:
-      //
-    }
-  };
-
   return (
     <div>
       <h3>Oscillator {oscillator.legend}</h3>
-      <div>
-        <h4>Octave</h4>
-
-        <label htmlFor={`${id}octaveMinus2`}>
-          <input
-            type="radio"
-            id={`${id}octaveMinus2`}
-            name={`${id}OctaveSelect`}
-            value="octaveMinus2"
-            onChange={handleSelectOctave}
-            checked={octaveSelected === 'octaveMinus2'}
-          />{' '}
-          -2
-        </label>
-        <label htmlFor={`${id}octaveMinus1`}>
-          <input
-            type="radio"
-            id={`${id}octaveMinus1`}
-            name={`${id}OctaveSelect`}
-            value="octaveMinus1"
-            onChange={handleSelectOctave}
-            checked={octaveSelected === 'octaveMinus1'}
-          />{' '}
-          -1
-        </label>
-        <label htmlFor={`${id}octave0`}>
-          <input
-            type="radio"
-            id={`${id}octave0`}
-            name={`${id}OctaveSelect`}
-            value="octave0"
-            onChange={handleSelectOctave}
-            checked={octaveSelected === 'octave0'}
-          />{' '}
-          0
-        </label>
-        <label htmlFor={`${id}octavePlus1`}>
-          <input
-            type="radio"
-            id={`${id}octavePlus1`}
-            name={`${id}OctaveSelect`}
-            value="octavePlus1"
-            onChange={handleSelectOctave}
-            checked={octaveSelected === 'octavePlus1'}
-          />{' '}
-          +1
-        </label>
-        <label htmlFor={`${id}octavePlus2`}>
-          <input
-            type="radio"
-            id={`${id}octavePlus2`}
-            name={`${id}OctaveSelect`}
-            value="octavePlus2"
-            onChange={handleSelectOctave}
-            checked={octaveSelected === 'octavePlus2'}
-          />{' '}
-          +2
-        </label>
-      </div>
+      <OscillatorWaveSelect
+        id={id}
+        handleSelectWave={handleSelectWave}
+        waveSelected={source}
+      />
+      <OscillatorOctaveSelect
+        id={id}
+        handleSelectOctave={handleSelectOctave}
+        octaveSelected={octaveSelected}
+      />
       <SliderLevel
         label={volumeControl.label}
         id={volumeControl.id}
@@ -246,7 +225,6 @@ const Oscillator = ({ oscillator }) => {
         scaledValue={detuneControlCoarse.scaledValue}
         multiplier={0.01}
         decimal={0}
-        // onChange={handleVolumeThrottled}
         onChange={({ target: { value } }) => handleDetuneCoarseThrottled(value)} // See the handleVolumeThrottled definition for an explanation
         // disabled={disabled}
       />
@@ -260,7 +238,6 @@ const Oscillator = ({ oscillator }) => {
         scaledValue={detuneControlFine.scaledValue}
         multiplier={1}
         decimal={0}
-        // onChange={handleVolumeThrottled}
         onChange={({ target: { value } }) => handleDetuneFineThrottled(value)} // See the handleVolumeThrottled definition for an explanation
         // disabled={disabled}
       />

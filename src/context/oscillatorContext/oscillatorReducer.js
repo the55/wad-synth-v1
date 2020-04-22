@@ -1,5 +1,6 @@
 import {
   SET_OSCILLATORS,
+  SET_OSCILLATOR_SOURCE,
   SET_OSCILLATOR_VOLUME,
   SET_OSCILLATOR_PITCH,
   SET_OSCILLATOR_OCTAVE,
@@ -16,6 +17,18 @@ export default (state, action) => {
       return {
         ...state,
         oscillators: action.payload,
+      };
+    case SET_OSCILLATOR_SOURCE:
+      return {
+        ...state,
+        oscillators: state.oscillators.map((oscillator) =>
+          oscillator.id === action.payload.oscillatorId
+            ? {
+                ...oscillator,
+                source: action.payload.wave,
+              }
+            : oscillator
+        ),
       };
     case SET_OSCILLATOR_VOLUME:
       return {

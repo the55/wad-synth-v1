@@ -4,14 +4,14 @@ button,
 input,
 select,
 textarea {
-  color: $color-aztek;
+  color: $color-white;
 }
 
 body {
   font-size: 1rem;
-  font-family: $font-primary;
-  color: $color-aztek;
-  font-weight: 400;
+  font-family: $font-normal;
+  color: $color-white;
+  font-weight: 600;
   // white-space: pre-line; //Without this, new lines (\n) in JSON are ignored. But it adds space to the top of the page too...
 }
 
@@ -27,45 +27,10 @@ a {
   }
 }
 
-/*----------  Homepage Display Typography  ----------*/
-
-// .display {
-//   font: 900 calc(0.75rem + 5vw) / 1.2 $font-two; // The weird calc() allows the font-size to be both fluid and resizable by the user
-//   letter-spacing: 0.02em;
-//   @include for-tablet-portrait-up {
-//     font-size: calc(1.25rem + 5vw);
-//   }
-//   @include for-tablet-landscape-up {
-//     font-size: calc(2rem + 5vw);
-//   }
-//   @include for-desktop-up {
-//     font-size: 6rem;
-//   }
-// }
-
-// .displaySmall {
-//   font: 700 calc(1rem + 1.5vw) / 1.2 $font-two; // The weird calc() allows the font-size to be both fluid and resizable by the user
-//   margin: 0 0.3%; // some pseudo-text justification
-//   &:nth-child(4) {
-//     margin-right: 0;
-//   }
-//   @include for-tablet-portrait-up {
-//     font-size: calc(1.5rem + 2vw);
-//   }
-//   @include for-tablet-landscape-up {
-//     font-size: calc(2rem + 2vw);
-//   }
-//   @include for-desktop-up {
-//     margin: 0 1.6%; // some pseudo-text justification
-//     font-size: 3.75rem;
-//   }
-// }
-
 h1,
 .h1,
 %h1 {
-  // font: 700 calcRem(56) / calc(64 / 56) $font-two;
-  font: 700 calcRem(48) / calc(56 / 48) $font-two;
+  font: 600 calcRem(48) / calc(56 / 48) $font-wide;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   margin: 0;
@@ -79,76 +44,34 @@ h1,
   }
 }
 
-// .h1menu,
-// %h1menu {
-//   font: 700 calcRem(48) / calc(56 / 48) $font-two;
-//   text-transform: uppercase;
-//   letter-spacing: 0.02em;
-//   margin: 0;
-//   @include for-tablet-portrait-up {
-//     font-size: calcRem(64);
-//     line-height: calc(72 / 64);
-//   }
-//   @include for-tablet-landscape-up {
-//     font-size: calcRem(72);
-//     line-height: calc(80 / 72);
-//   }
-//   &:hover a {
-//     background: none !important;
-//   }
-// }
-
-// .h1Question,
-// %h1Question {
-//   font: 700 calcRem(40) / calc(48 / 40) $font-primary;
-//   text-transform: none;
-//   letter-spacing: 0;
-//   margin: 0;
-// }
-
 h2,
 .h2,
 %h2 {
-  font: 700 calcRem(24) / calc(32 / 24) $font-two;
+  font: 600 calcRem(24) / calc(32 / 24) $font-wide;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin: 0;
   @include for-tablet-portrait-up {
-    font: 700 calcRem(32) / calc(40 / 32) $font-two;
+    font: 600 calcRem(32) / calc(40 / 32) $font-wide;
   }
 }
-
-// .h2Home {
-//   font: 900 calcRem(30) / calc(40 / 30) $font-two;
-//   text-transform: uppercase;
-//   letter-spacing: 0.02em;
-//   margin: 0;
-// }
-
-// .h2small {
-//   font: 700 calcRem(22) / calc(30 / 22) $font-two;
-//   text-transform: uppercase;
-//   letter-spacing: 0.04em;
-//   margin: 0;
-//   position: relative;
-// }
 
 h3,
 .h3,
 %h3 {
-  font: 600 calcRem(24) / calc(32 / 24) $font-primary;
+  font: 600 calcRem(24) / calc(32 / 24) $font-cond;
   text-transform: none;
   letter-spacing: 0;
   margin: 0;
   @include for-tablet-landscape-up {
-    font: 600 calcRem(28) / calc(36 / 28) $font-primary;
+    font: 600 calcRem(28) / calc(36 / 28) $font-cond;
   }
 }
 
 h4,
 .h4,
 %h4 {
-  font: 600 calcRem(22) / calc(32 / 22) $font-primary;
+  font: 600 calcRem(22) / calc(32 / 22) $font-comp;
   text-transform: none;
   letter-spacing: normal;
   margin: 0;
@@ -157,7 +80,7 @@ h4,
 h5,
 .h5,
 %h5 {
-  font: 600 calcRem(16) / calc(24 / 16) $font-primary;
+  font: 600 calcRem(16) / calc(24 / 16) $font-normal;
   text-transform: none;
   letter-spacing: normal;
   margin: 0;
@@ -166,27 +89,19 @@ h5,
 h6,
 .h6,
 %h6 {
-  font: 600 calcRem(16) / calc(16 / 16) $font-primary;
+  font: 600 calcRem(16) / calc(16 / 16) $font-normal;
   text-transform: none;
   letter-spacing: normal;
   margin: 0;
   @include for-tablet-landscape-up {
-    font: 600 calcRem(15) / calc(16 / 15) $font-primary;
+    font: 600 calcRem(15) / calc(16 / 15) $font-normal;
   }
 }
-
-// .lede,
-// %lede {
-//   font: 700 calcRem(21) / calc(28 / 21) $font-primary;
-//   text-transform: none;
-//   letter-spacing: normal;
-//   margin: 0;
-// }
 
 p,
 .p,
 %p {
-  font: 400 calcRem(18) / calc(28 / 18) $font-primary;
+  font: 400 calcRem(18) / calc(28 / 18) $font-normal;
   text-transform: none;
   letter-spacing: normal;
   margin: 0;
@@ -209,7 +124,7 @@ p + p {
 // }
 
 li {
-  font: 400 calcRem(18) / calc(28 / 18) $font-primary;
+  font: 400 calcRem(18) / calc(28 / 18) $font-normal;
   text-transform: none;
   letter-spacing: normal;
   margin: 0;
@@ -223,54 +138,54 @@ li {
 //   margin: 0;
 // }
 
-.fontSmall,
-%fontSmall {
-  font: 400 calcRem(16) / calc(24 / 16) $font-primary;
-  text-transform: none;
-  letter-spacing: normal;
-  // margin: 0;
-  // strong {
-  //   font-weight: 600;
-  // }
-}
+// .fontSmall,
+// %fontSmall {
+//   font: 400 calcRem(16) / calc(24 / 16) $font-normal;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   // margin: 0;
+//   // strong {
+//   //   font-weight: 600;
+//   // }
+// }
 
-.fontSmaller,
-%fontSmaller {
-  font: 400 calcRem(15) / calc(20 / 15) $font-primary;
-  text-transform: none;
-  letter-spacing: normal;
-  // margin: 0;
-  // strong {
-  //   font-weight: 600;
-  // }
-}
+// .fontSmaller,
+// %fontSmaller {
+//   font: 400 calcRem(15) / calc(20 / 15) $font-normal;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   // margin: 0;
+//   // strong {
+//   //   font-weight: 600;
+//   // }
+// }
 
-.fontTiny,
-%fontTiny {
-  font: 400 calcRem(12) / calc(16 / 12) $font-primary;
-  text-transform: none;
-  letter-spacing: normal;
-  margin: 0 0 1rem 0;
-  // strong {
-  //   font-weight: 600;
-  // }
-}
+// .fontTiny,
+// %fontTiny {
+//   font: 400 calcRem(12) / calc(16 / 12) $font-normal;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   margin: 0 0 1rem 0;
+//   // strong {
+//   //   font-weight: 600;
+//   // }
+// }
 
-.nav1,
-%nav1 {
-  font: 500 calcRem(15) / calc(24 / 15) $font-primary;
-  text-transform: none;
-  letter-spacing: normal;
-  margin: 0;
-}
+// .nav1,
+// %nav1 {
+//   font: 500 calcRem(15) / calc(24 / 15) $font-normal;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   margin: 0;
+// }
 
-.nav2,
-%nav2 {
-  font: 400 calcRem(14) / calc(16 / 14) $font-primary;
-  text-transform: none;
-  letter-spacing: normal;
-  margin: 0;
-}
+// .nav2,
+// %nav2 {
+//   font: 400 calcRem(14) / calc(16 / 14) $font-normal;
+//   text-transform: none;
+//   letter-spacing: normal;
+//   margin: 0;
+// }
 
 // .tabNav,
 // %tabNav {
@@ -283,7 +198,7 @@ li {
 
 .buttonText,
 %buttonText {
-  font: 600 calcRem(18) / calc(22 / 18) $font-primary;
+  font: 600 calcRem(18) / calc(22 / 18) $font-normal;
   text-transform: none;
   letter-spacing: normal;
   text-align: center;
