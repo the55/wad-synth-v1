@@ -9,7 +9,15 @@
 @import './styles/helpers'; // Hidden, iInline, Colors, Margins & Padding
 @import './styles/typography'; // Text styles and helpers
 @import './styles/elements'; // Defaults for img, buttons, hr, ul, etc
+@import './styles/inputrange'; // Sliders
+
+html {
+  background-color: $color-haiti; // the background color if you scroll too far
+}
 
 body {
-  background: linear-gradient($color-zodiac, $color-firefly);
+  min-height: 100vh;
+  padding-bottom: 12rem; // Prevent object being hidden by the keyboard
+  background: $color-haiti;
+  // background: #ddd;
 }

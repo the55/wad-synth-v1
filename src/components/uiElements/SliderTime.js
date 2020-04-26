@@ -12,8 +12,8 @@ const SliderTime = ({
   disabled,
 }) => {
   return (
-    <label htmlFor={id}>
-      <h3>{label}</h3>
+    <label htmlFor={id} className={`labelLayout`}>
+      {label}
       <input
         type="range"
         id={id}
@@ -23,7 +23,7 @@ const SliderTime = ({
         step={step}
         value={sliderValue}
         onChange={onChange}
-        disabled={disabled} // Most sliders need to be disabled while a note is playing
+        // disabled={disabled} // Most sliders need to be disabled while a note is playing
       />
       {/* {scaledValue ? scaledValue.toFixed(4) : sliderValue} */}
       {scaledValue < 1

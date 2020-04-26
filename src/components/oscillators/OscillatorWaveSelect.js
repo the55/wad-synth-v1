@@ -3,7 +3,7 @@ import React from 'react';
 const OscillatorWaveSelect = ({ id, handleSelectWave, waveSelected }) => {
   return (
     <div>
-      <h4>Wave Form</h4>
+      <h4 className={`srOnly`}>Wave Form</h4>
 
       <label htmlFor={`${id}WaveTriangle`}>
         <input

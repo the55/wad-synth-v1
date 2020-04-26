@@ -1,4 +1,5 @@
 @import './typography';
+@import './mixins';
 
 img {
   display: block;
@@ -7,6 +8,82 @@ img {
   height: auto;
   max-width: 100%;
   // max-height: 100%;
+}
+
+// input[type='range'] {
+//   width: 100%;
+// }
+
+.synthModuleContainer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  border: 3px solid $color-white;
+  border-radius: $radius-super 0 $radius-super 0;
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -0.125rem;
+    left: -0.125rem;
+    width: 2.625rem;
+    height: 2rem;
+    border-radius: $radius-super 0 0 0;
+    background: $color-white;
+  }
+}
+
+.synthModuleHeader {
+  position: relative;
+  width: calc(100% - 2.5rem);
+  height: 1.5rem;
+  background: $color-white;
+  margin-left: 2.5rem;
+  padding: 0 1rem 0 0.5rem;
+  color: $color-haiti;
+  // @include synth-module-inner-corner($color-white);
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    // border-radius: $radius-super 0 0 0;
+    // background: $color-white;
+
+    background: radial-gradient(
+      circle at 100% 100%,
+      transparent 0.5rem,
+      $color-white calc(0.5rem + 0.5px)
+    ); // adding .5px in the calc smooths out a pixel-y transition;
+  }
+}
+
+.synthModuleInner {
+  display: grid;
+  grid-template-columns: 2.5rem auto;
+}
+
+.synthModuleSidebar {
+  background: $color-white;
+  color: $color-haiti;
+  padding: 0 calcRem(3) 0 0;
+}
+
+.synthModuleControls {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  -webkit-font-smoothing: antialiased; // All of the text is light on a dark background
+}
+
+.labelLayout {
+  display: grid;
+  grid-template-columns: 3.5rem auto 2rem;
+  align-items: center;
 }
 
 .inlineIcon {
@@ -213,34 +290,34 @@ ul {
 /* ----------------------------
 Shadows
 ---------------------------- */
-.shadowBig,
-%shadowBig {
-  box-shadow: $box-shadow-big;
-}
+// .shadowBig,
+// %shadowBig {
+//   box-shadow: $box-shadow-big;
+// }
 
-.shadowSmall,
-%shadowSmall {
-  box-shadow: $box-shadow-small;
-}
+// .shadowSmall,
+// %shadowSmall {
+//   box-shadow: $box-shadow-small;
+// }
 
-.shadowTiny,
-%shadowTiny {
-  box-shadow: $box-shadow-tiny;
-}
+// .shadowTiny,
+// %shadowTiny {
+//   box-shadow: $box-shadow-tiny;
+// }
 
-.shadowTabBar,
-%shadowTabBar {
-  box-shadow: $box-shadow-tab-bar;
-}
+// .shadowTabBar,
+// %shadowTabBar {
+//   box-shadow: $box-shadow-tab-bar;
+// }
 
-.shadowQuestion,
-%shadowQuestion {
-  box-shadow: $box-shadow-question;
-}
+// .shadowQuestion,
+// %shadowQuestion {
+//   box-shadow: $box-shadow-question;
+// }
 
-.textShadow {
-  text-shadow: $text-shadow;
-}
+// .textShadow {
+//   text-shadow: $text-shadow;
+// }
 
 /* ----------------------------
 Colors

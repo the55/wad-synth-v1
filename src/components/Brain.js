@@ -28,11 +28,14 @@ const Oscillators = () => {
 
   // Update the Wads if their state changes
   useEffect(() => {
-    setOscillator1Wad(new Wad(osc1));
-    setOscillator2Wad(new Wad(osc2));
-    setOscillator3Wad(new Wad(osc3));
-    // console.log(oscillator1Wad);
-  }, [osc1, osc2, osc3]);
+    // Only update the Wad if a note isn't playing, otherwise weird things happen
+    if (!notePlaying) {
+      setOscillator1Wad(new Wad(osc1));
+      setOscillator2Wad(new Wad(osc2));
+      setOscillator3Wad(new Wad(osc3));
+      // console.log(oscillator1Wad);
+    }
+  }, [osc1, osc2, osc3, notePlaying]);
 
   // Setup the PolyWad
   const [allOscillatorWads, setAllOscillatorWads] = useState(new Wad.Poly());
@@ -64,7 +67,6 @@ const Oscillators = () => {
         .add(oscillator3Wad);
       // --- Play the PolyWad
       allOscillatorWads.play(playArgs);
-
       // // Try Individual Oscillators if the Poly Wad doesn't work right
       // oscillator1Wad.play(playArgs);
       // oscillator2Wad.play(playArgs);
@@ -110,6 +112,10 @@ const Oscillators = () => {
     // volumeEnvelopeDecay,
     // playArgs,
   ]);
+
+  // useEffect(() => {
+  //   console.log(allOscillatorWads);
+  // }, [allOscillatorWads]);
 
   return <Fragment />;
 };

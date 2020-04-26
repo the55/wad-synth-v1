@@ -3,7 +3,7 @@ import React from 'react';
 const OscillatorOctaveSelect = ({ id, handleSelectOctave, octaveSelected }) => {
   return (
     <div>
-      <h4>Octave</h4>
+      <h4 className={`label inline`}>Octave</h4>
 
       <label htmlFor={`${id}OctaveMinus2`}>
         <input

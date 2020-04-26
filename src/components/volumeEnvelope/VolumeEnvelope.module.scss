@@ -1,3 +1,5 @@
-.volumeEnvelopeContainer {
-  padding-bottom: 13rem;
-}
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+@include synth-module-color($color-anzac100);
+@include range-slider-color($color-anzac100, $color-anzac50);

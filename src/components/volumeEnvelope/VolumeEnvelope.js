@@ -29,7 +29,9 @@ const VolumeEnvelope = () => {
 
   // const [release, setRelease] = useState('1');
 
-  let disabled = notePlaying ? true : false;
+  // This functionality has been moved to Brain.js. Updates to the Oscillator/Wad only take effect if a note isn't playing
+  // But I'll keep this here for now, because I might like the visual indication that a slider doesn't function during playback
+  // let disabled = notePlaying ? true : false;
 
   // Convert the linear scale of the slider to a Power Scale, so that there's more detail in the low numbers
   // let scale = scalePow()
@@ -107,32 +109,39 @@ const VolumeEnvelope = () => {
   };
 
   return (
-    <div className={`${styles.volumeEnvelopeContainer}`}>
-      <h2>Volume Envelope</h2>
-      <SliderTime
-        label={volumeEnvelopeAttack.label}
-        id={volumeEnvelopeAttack.id}
-        min={volumeEnvelopeAttack.min}
-        max={volumeEnvelopeAttack.max}
-        step={volumeEnvelopeAttack.step}
-        sliderValue={volumeEnvelopeAttack.sliderValue}
-        scaledValue={volumeEnvelopeAttack.scaledValue}
-        onChange={handleAttack}
-        disabled={disabled}
-      />
-      <SliderTime
-        label={volumeEnvelopeDecay.label}
-        id={volumeEnvelopeDecay.id}
-        min={volumeEnvelopeDecay.min}
-        max={volumeEnvelopeDecay.max}
-        step={volumeEnvelopeDecay.step}
-        sliderValue={volumeEnvelopeDecay.sliderValue}
-        scaledValue={volumeEnvelopeDecay.scaledValue}
-        onChange={handleDecay}
-        disabled={disabled}
-      />
+    <section className={`synthModuleContainer ${styles.synthModuleContainer}`}>
+      <h2 className={`synthModuleHeader ${styles.synthModuleHeader}`}>
+        Amplifier
+      </h2>
+      <div className={`synthModuleInner`}>
+        <div className={`synthModuleSidebar ${styles.synthModuleSidebar}`}>
+          {/* Empty sidebar */}
+        </div>
+        <div className={`synthModuleControls ${styles.synthModuleControls}`}>
+          <SliderTime
+            label={volumeEnvelopeAttack.label}
+            id={volumeEnvelopeAttack.id}
+            min={volumeEnvelopeAttack.min}
+            max={volumeEnvelopeAttack.max}
+            step={volumeEnvelopeAttack.step}
+            sliderValue={volumeEnvelopeAttack.sliderValue}
+            scaledValue={volumeEnvelopeAttack.scaledValue}
+            onChange={handleAttack}
+            // disabled={disabled}
+          />
+          <SliderTime
+            label={volumeEnvelopeDecay.label}
+            id={volumeEnvelopeDecay.id}
+            min={volumeEnvelopeDecay.min}
+            max={volumeEnvelopeDecay.max}
+            step={volumeEnvelopeDecay.step}
+            sliderValue={volumeEnvelopeDecay.sliderValue}
+            scaledValue={volumeEnvelopeDecay.scaledValue}
+            onChange={handleDecay}
+            // disabled={disabled}
+          />
 
-      {/* <SliderLevel  
+          {/* <SliderLevel  
         label={'Sustain'}
         id={'sustain'}
         min={'0'}
@@ -142,21 +151,21 @@ const VolumeEnvelope = () => {
         onChange={handleSustain}
       /> */}
 
-      <SliderLevel
-        label={volumeEnvelopeSustain.label}
-        id={volumeEnvelopeSustain.id}
-        min={volumeEnvelopeSustain.min}
-        max={volumeEnvelopeSustain.max}
-        step={volumeEnvelopeSustain.step}
-        sliderValue={volumeEnvelopeSustain.sliderValue}
-        scaledValue={volumeEnvelopeSustain.scaledValue}
-        onChange={handleSustain}
-        disabled={disabled}
-        multiplier={100}
-        decimal={0}
-      />
+          <SliderLevel
+            label={volumeEnvelopeSustain.label}
+            id={volumeEnvelopeSustain.id}
+            min={volumeEnvelopeSustain.min}
+            max={volumeEnvelopeSustain.max}
+            step={volumeEnvelopeSustain.step}
+            sliderValue={volumeEnvelopeSustain.sliderValue}
+            scaledValue={volumeEnvelopeSustain.scaledValue}
+            onChange={handleSustain}
+            // disabled={disabled}
+            multiplier={100}
+            decimal={0}
+          />
 
-      {/* <SliderTime
+          {/* <SliderTime
         label={volumeEnvelopeHold.label}
         id={volumeEnvelopeHold.id}
         min={volumeEnvelopeHold.min}
@@ -166,18 +175,20 @@ const VolumeEnvelope = () => {
         scaledValue={volumeEnvelopeHold.scaledValue}
         onChange={handleHold}
       /> */}
-      <SliderTime
-        label={volumeEnvelopeRelease.label}
-        id={volumeEnvelopeRelease.id}
-        min={volumeEnvelopeRelease.min}
-        max={volumeEnvelopeRelease.max}
-        step={volumeEnvelopeRelease.step}
-        sliderValue={volumeEnvelopeRelease.sliderValue}
-        scaledValue={volumeEnvelopeRelease.scaledValue}
-        onChange={handleRelease}
-        disabled={disabled}
-      />
-    </div>
+          <SliderTime
+            label={volumeEnvelopeRelease.label}
+            id={volumeEnvelopeRelease.id}
+            min={volumeEnvelopeRelease.min}
+            max={volumeEnvelopeRelease.max}
+            step={volumeEnvelopeRelease.step}
+            sliderValue={volumeEnvelopeRelease.sliderValue}
+            scaledValue={volumeEnvelopeRelease.scaledValue}
+            onChange={handleRelease}
+            // disabled={disabled}
+          />
+        </div>
+      </div>
+    </section>
   );
 };
 

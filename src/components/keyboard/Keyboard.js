@@ -95,7 +95,7 @@ const Keyboard = () => {
       `[data-keyname="G${keyboardOctave}"]`
     );
     // Do some math to move the keyboard so that the current G is in the middle of the viewport
-    let tempKeyboardOffset = windowWidth / 2 - keyboardRefG.offsetLeft;
+    let tempKeyboardOffset = windowWidth / 2 - keyboardRefG.offsetLeft + 2;
     // Update the Y position of the keyboard
     setKeyboardOffset(tempKeyboardOffset);
     // Using setTimeout to fade the keyboard in after it's location has been set, just the first time it loads
@@ -210,7 +210,7 @@ const Keyboard = () => {
 
   return (
     <div className={`${styles.keyboardComponent}`} ref={keyboardRef}>
-      <h2>Keyboard</h2>
+      {/* <h2>Keys</h2> */}
 
       <label htmlFor="keyboardOctaveInput">
         OCT
