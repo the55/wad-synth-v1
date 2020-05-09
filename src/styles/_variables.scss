@@ -7,6 +7,7 @@ $font-normal: obviously, Helvetica, Arial, sans-serif;
 $font-wide: obviously-wide, Helvetica, Arial, sans-serif;
 $font-cond: obviously-condensed, Helvetica, Arial, sans-serif;
 $font-comp: obviously-compressed, Helvetica, Arial, sans-serif;
+$font-mono: ibm-plex-mono, Courier, monospace;
 // $font-two: urw-din-condensed, Helvetica, Arial, sans-serif;
 // $font-three: urw-din, Helvetica, Arial, sans-serif;
 
@@ -27,14 +28,16 @@ $hr-color: #ccc;
 // $color-zodiac: hsla(224, 69, 15, 1); // #0C1A42
 // $color-firefly: hsla(224, 62, 10, 1); // #0A1229
 $color-haiti: hsla(224, 61, 8, 1); // #080F21
+// --- Inputs
+$color-lcd-green: hsla(119, 75, 45, 1); // #1FC71D
 
 // Blue Module
 $color-azure100: hsla(205, 100, 47, 1); //#008CF0
 $color-azure50: hsla(205, 100, 47, 0.5);
 $color-azure10: hsla(205, 100, 47, 0.1);
-:root {
-  --color-azure: 205, 100%, 47%; //#008CF0
-}
+// :root {
+//   --color-azure: 205, 100%, 47%; //#008CF0
+// }
 
 // Yellow Module
 $color-anzac100: hsla(33, 74, 57, 1); // #E39A40

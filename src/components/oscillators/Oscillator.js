@@ -49,6 +49,8 @@ const Oscillator = ({ oscillator }) => {
 
   let newSliderScale;
   let scaledValue;
+  let invertedValue;
+  // Scale the range slider value, so that it's not linear
   const getScaledValue = (min, max, value, exponent) => {
     newSliderScale = scalePow()
       .range([min, max])
@@ -56,16 +58,14 @@ const Oscillator = ({ oscillator }) => {
       .exponent(exponent);
     return (scaledValue = newSliderScale(value));
   };
-
-  // Throttle the slider event
-  // Throttle needs to use useRef, otherwise react just makes a new event
-  // See https://medium.com/trabe/react-syntheticevent-reuse-889cd52981b6 for how the onChange works
-  const handleVolumeThrottled = useRef(
-    throttle(function handleVolume(value) {
-      getScaledValue(volumeControl.min, volumeControl.max, value, 1);
-      setOscillatorVolume(id, parseFloat(value), scaledValue);
-    }, 50)
-  ).current;
+  // Invert the scale of the number input
+  const getInvertedValue = (min, max, value, exponent) => {
+    newSliderScale = scalePow()
+      .range([min, max])
+      .domain([min, max])
+      .exponent(exponent);
+    return (invertedValue = newSliderScale.invert(value));
+  };
 
   // Set the source/waveform for an oscillator
   const handleSelectWave = (e) => {
@@ -102,7 +102,7 @@ const Oscillator = ({ oscillator }) => {
   // Detune Coarse State
   // --- Create a Ref with the initial state (from a prop/context)
   const updatedDetuneCoarseRef = useRef(detuneControlCoarse.scaledValue);
-  // Create a function to update both the Ref and the state. It is passed our updated value
+  // Create a function to update the Ref. It is passed our updated value
   const setUpdatedDetuneCoarse = (updatedValue) => {
     updatedDetuneCoarseRef.current = updatedValue;
   };
@@ -123,6 +123,11 @@ const Oscillator = ({ oscillator }) => {
     setUpdatedDetuneFine(detuneControlFine.scaledValue);
   }, [detuneControlFine]);
 
+  // Event Handlers
+  // --- Detune Coarse Slider
+  // ------ Throttle the slider event
+  // ------ Throttle needs to use useRef, otherwise react just makes a new event
+  // ------ See https://medium.com/trabe/react-syntheticevent-reuse-889cd52981b6 for how the onChange works
   const handleDetuneCoarseThrottled = useRef(
     throttle(function handleDetuneCoarse(value) {
       let detuneValue;
@@ -132,17 +137,65 @@ const Oscillator = ({ oscillator }) => {
         value,
         1
       );
-      detuneValue = scaledValue + updatedDetuneFineRef.current; // Add the value of the Fine slider to the current value of the Coarse slider. To get the updated state in an event handler we need to use a Ref, see above for the setup.
+      detuneValue = scaledValue + updatedDetuneFineRef.current; // Add the value of the Coarse slider to the current value of the Fine slider. To get the updated state in an event handler we need to use a Ref, see above for the setup.
 
-      setOscillatorDetuneCoarse(
-        id,
-        parseFloat(value),
-        scaledValue,
-        detuneValue
-      );
+      setOscillatorDetuneCoarse(id, Number(value), scaledValue, detuneValue);
     }, 50)
   ).current;
+  // --- Detune Coarse Number Input
+  const handleDetuneCoarseInput = (value) => {
+    let detuneValue;
+    if (
+      value * 100 <= detuneControlCoarse.max &&
+      value * 100 >= detuneControlCoarse.min &&
+      value !== ''
+    ) {
+      getInvertedValue(
+        // Invert the scale function to update the slider value
+        detuneControlCoarse.min,
+        detuneControlCoarse.max,
+        value * 100, // ex.: input is "3", but really we want 300
+        1
+      );
+      detuneValue = invertedValue + updatedDetuneFineRef.current; // Add the value of the Coarse slider to the current value of the Fine slider. To get the updated state in an event handler we need to use a Ref, see above for the setup.
 
+      setOscillatorDetuneCoarse(id, value * 100, invertedValue, detuneValue);
+    } else if (value === '') {
+      setOscillatorDetuneCoarse(
+        id,
+        '', // An empty string allows typing a negative or delete all numbers without the Scale/Invert functions running
+        '',
+        updatedDetuneFineRef.current // Detune value. Normally Coarse and Fine values are added, but Coarse is empty so we don't need it
+      );
+    } else if (value * 100 > detuneControlCoarse.max) {
+      setOscillatorDetuneCoarse(
+        id,
+        detuneControlCoarse.max,
+        detuneControlCoarse.max,
+        detuneControlCoarse.max + updatedDetuneFineRef.current // Detune value
+      );
+    } else if (value * 100 < detuneControlCoarse.min) {
+      setOscillatorDetuneCoarse(
+        id,
+        detuneControlCoarse.min,
+        detuneControlCoarse.min,
+        detuneControlCoarse.min + updatedDetuneFineRef.current // Detune value
+      );
+    }
+  };
+  // Detune Coarse Number Input onBlur
+  const handleDetuneCoarseOnBlur = (value) => {
+    if (value === '') {
+      setOscillatorDetuneCoarse(
+        id,
+        0, // Set the value to 0 if the input is empty
+        0,
+        updatedDetuneFineRef.current // Detune value. Normally Coarse and Fine values are added, but Coarse is empty so we don't need it
+      );
+    }
+  };
+
+  // --- Detune Fine Slider
   const handleDetuneFineThrottled = useRef(
     throttle(function handleDetuneFine(value) {
       let detuneValue;
@@ -151,6 +204,110 @@ const Oscillator = ({ oscillator }) => {
       setOscillatorDetuneFine(id, parseFloat(value), scaledValue, detuneValue);
     }, 50)
   ).current;
+  // --- Detune Fine Number Input
+  const handleDetuneFineInput = (value) => {
+    let detuneValue;
+    if (
+      value * 1 <= detuneControlFine.max &&
+      value * 1 >= detuneControlFine.min &&
+      value !== ''
+    ) {
+      getInvertedValue(
+        detuneControlFine.min,
+        detuneControlFine.max,
+        value * 1, // Sometimes we want a multiplier, but just coercing the value from a string to a number here
+        1
+      );
+      detuneValue = invertedValue + updatedDetuneCoarseRef.current; // Add the value of the Fine slider to the current value of the Coarse slider. To get the updated state in an event handler we need to use a Ref, see above for the setup.
+
+      setOscillatorDetuneFine(id, value * 1, invertedValue, detuneValue);
+    } else if (value === '') {
+      setOscillatorDetuneFine(
+        id,
+        '',
+        '',
+        updatedDetuneCoarseRef.current // Detune value. Normally Coarse and Fine values are added, but Fine is empty so we don't need it
+      );
+    } else if (value * 1 > detuneControlFine.max) {
+      setOscillatorDetuneFine(
+        id,
+        detuneControlFine.max,
+        detuneControlFine.max,
+        detuneControlFine.max + updatedDetuneCoarseRef.current // Detune value
+      );
+    } else if (value * 1 < detuneControlFine.min) {
+      setOscillatorDetuneFine(
+        id,
+        detuneControlFine.min,
+        detuneControlFine.min,
+        detuneControlFine.min + updatedDetuneCoarseRef.current // Detune value
+      );
+    }
+  };
+  // Detune Fine Number Input onBlur
+  const handleDetuneFineOnBlur = (value) => {
+    if (value === '') {
+      setOscillatorDetuneFine(
+        id,
+        0,
+        0,
+        updatedDetuneCoarseRef.current // Detune value. Normally Coarse and Fine values are added, but Fine is empty so we don't need it
+      );
+    }
+  };
+
+  // --- Volume Slider
+  const handleVolumeThrottled = useRef(
+    throttle(function handleVolume(value) {
+      getScaledValue(volumeControl.min, volumeControl.max, value, 1);
+      setOscillatorVolume(id, Number(value), scaledValue);
+    }, 50)
+  ).current;
+  // --- Volume Number Input
+  const handleVolumeInput = (value) => {
+    if (
+      value * 0.01 <= volumeControl.max &&
+      value * 0.01 >= volumeControl.min &&
+      value !== ''
+    ) {
+      getInvertedValue(
+        // Invert the scaled value to update the slider value
+        volumeControl.min,
+        volumeControl.max,
+        value * 0.01,
+        1
+      );
+      setOscillatorVolume(id, value * 0.01, invertedValue);
+    } else if (value === '') {
+      setOscillatorVolume(
+        id,
+        '', // An empty string allows typing a negative or delete all numbers without the Scale/Invert functions running. The slider goes to the middle, but I think that's okay.
+        0 // Temporarily set the volume to 0
+      );
+    } else if (value * 0.01 > volumeControl.max) {
+      setOscillatorVolume(
+        id,
+        volumeControl.max,
+        volumeControl.max // Volume value
+      );
+    } else if (value * 0.01 < volumeControl.min) {
+      setOscillatorVolume(
+        id,
+        volumeControl.min,
+        volumeControl.min // Volume value
+      );
+    }
+  };
+  // Detune Coarse Number Input onBlur
+  const handleVolumeOnBlur = (value) => {
+    if (value === '') {
+      setOscillatorVolume(
+        id,
+        0, // Set the value to 0 if the input is empty
+        0 // Set the Volume to 0
+      );
+    }
+  };
 
   return (
     <div className={`synthModuleInner`}>
@@ -182,7 +339,13 @@ const Oscillator = ({ oscillator }) => {
           decimal={0}
           onChange={({ target: { value } }) =>
             handleDetuneCoarseThrottled(value)
-          } // See the handleVolumeThrottled definition for an explanation
+          } // Destructuring e.target.value, see the handleVolumeThrottled definition for more of an explanation
+          handleNumberInput={({ target: { value } }) =>
+            handleDetuneCoarseInput(value)
+          }
+          handleOnBlur={({ target: { value } }) =>
+            handleDetuneCoarseOnBlur(value)
+          }
           // disabled={disabled}
         />
         <SliderLevel
@@ -196,8 +359,15 @@ const Oscillator = ({ oscillator }) => {
           multiplier={1}
           decimal={0}
           onChange={({ target: { value } }) => handleDetuneFineThrottled(value)} // See the handleVolumeThrottled definition for an explanation
+          handleNumberInput={({ target: { value } }) =>
+            handleDetuneFineInput(value)
+          }
+          handleOnBlur={({ target: { value } }) =>
+            handleDetuneFineOnBlur(value)
+          }
           // disabled={disabled}
         />
+
         <SliderLevel
           label={volumeControl.label}
           id={volumeControl.id}
@@ -210,6 +380,10 @@ const Oscillator = ({ oscillator }) => {
           decimal={0}
           // onChange={handleVolumeThrottled}
           onChange={({ target: { value } }) => handleVolumeThrottled(value)} // See the handleVolumeThrottled definition for an explanation
+          handleNumberInput={({ target: { value } }) =>
+            handleVolumeInput(value)
+          }
+          handleOnBlur={({ target: { value } }) => handleVolumeOnBlur(value)}
           // disabled={disabled}
         />
       </div>

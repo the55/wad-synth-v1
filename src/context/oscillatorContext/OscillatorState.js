@@ -25,9 +25,9 @@ const OscillatorState = (props) => {
         volumeControl: {
           id: 'osc1VolumeControl',
           label: 'Volume',
-          min: 0.001,
+          min: 0,
           max: 1,
-          step: 'any',
+          step: 0.01,
           sliderValue: 0.8, // What the slider visually displays
           scaledValue: 0.8, // Default output value. Updates may be scaled
         },
@@ -36,21 +36,21 @@ const OscillatorState = (props) => {
         detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
         detuneControlCoarse: {
           id: 'osc1DetuneControlCoarse',
-          label: 'Detune Coarse',
+          label: 'Semitone',
           min: -1200,
           max: 1200,
           step: 100,
-          sliderValue: 0.001, // What the slider visually displays
-          scaledValue: 0.001, // Default output value. Updates may be scaled
+          sliderValue: 0, // What the slider visually displays
+          scaledValue: 0, // Default output value. Updates may be scaled
         },
         detuneControlFine: {
           id: 'osc1DetuneControlFine',
-          label: 'Detune Fine',
-          min: -50.001,
-          max: 50.001,
+          label: 'Detune',
+          min: -50,
+          max: 50,
           step: 1,
-          sliderValue: 0.001, // What the slider visually displays
-          scaledValue: 0.001, // Default output value. Updates may be scaled
+          sliderValue: 0, // What the slider visually displays
+          scaledValue: 0, // Default output value. Updates may be scaled
         },
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
 
@@ -72,9 +72,9 @@ const OscillatorState = (props) => {
         volumeControl: {
           id: 'osc2VolumeControl',
           label: 'Volume',
-          min: 0.001,
+          min: 0,
           max: 1,
-          step: 'any',
+          step: 0.01,
           sliderValue: 0.8, // What the slider visually displays
           scaledValue: 0.8, // Default output value. Updates may be scaled
         },
@@ -83,21 +83,21 @@ const OscillatorState = (props) => {
         detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
         detuneControlCoarse: {
           id: 'osc2DetuneControlCoarse',
-          label: 'Detune',
+          label: 'Semitone',
           min: -1200,
           max: 1200,
           step: 100,
-          sliderValue: 0.001, // What the slider visually displays
-          scaledValue: 0.001, // Default output value. Updates may be scaled
+          sliderValue: 0, // What the slider visually displays
+          scaledValue: 0, // Default output value. Updates may be scaled
         },
         detuneControlFine: {
           id: 'osc2DetuneControlFine',
-          label: 'Detune Fine',
-          min: -50.0000000001,
-          max: 50.0000000001,
+          label: 'Detune',
+          min: -50,
+          max: 50,
           step: 1,
-          sliderValue: 0.0000000001, // What the slider visually displays
-          scaledValue: 0.0000000001, // Default output value. Updates may be scaled
+          sliderValue: 0, // What the slider visually displays
+          scaledValue: 0, // Default output value. Updates may be scaled
         },
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
 
@@ -119,9 +119,9 @@ const OscillatorState = (props) => {
         volumeControl: {
           id: 'osc3VolumeControl',
           label: 'Volume',
-          min: 0.001,
+          min: 0,
           max: 1,
-          step: 'any',
+          step: 0.01,
           sliderValue: 0.8, // What the slider visually displays
           scaledValue: 0.8, // Default output value. Updates may be scaled
         },
@@ -130,21 +130,21 @@ const OscillatorState = (props) => {
         detune: 0, // Set a default detune on the constructor if you don't want to set detune on <code>play()</code>. Detune is measured in cents. 100 cents is equal to 1 semitone.
         detuneControlCoarse: {
           id: 'osc3DetuneControlCoarse',
-          label: 'Detune',
+          label: 'Semitone',
           min: -1200,
           max: 1200,
           step: 100,
-          sliderValue: 0.0000000001, // What the slider visually displays
-          scaledValue: 0.0000000001, // Default output value. Updates may be scaled
+          sliderValue: 0, // What the slider visually displays
+          scaledValue: 0, // Default output value. Updates may be scaled
         },
         detuneControlFine: {
           id: 'osc3DetuneControlFine',
-          label: 'Detune Fine',
-          min: -50.0000000001,
-          max: 50.0000000001,
+          label: 'Detune',
+          min: -50,
+          max: 50,
           step: 1,
-          sliderValue: 0.0000000001, // What the slider visually displays
-          scaledValue: 0.0000000001, // Default output value. Updates may be scaled
+          sliderValue: 0, // What the slider visually displays
+          scaledValue: 0, // Default output value. Updates may be scaled
         },
         panning: 0, // Horizontal placement of the sound source. Possible values are from 1 to -1.
 

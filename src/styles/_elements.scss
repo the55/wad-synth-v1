@@ -82,8 +82,25 @@ img {
 
 .labelLayout {
   display: grid;
-  grid-template-columns: 3.5rem auto 2rem;
+  grid-template-columns: 3.5rem auto calcRem(58);
   align-items: center;
+}
+
+input[type='number'],
+select {
+  width: calcRem(58);
+  height: calcRem(29);
+  background: $color-sky10;
+  border: 1px solid $color-sky50;
+  color: $color-lcd-green;
+  border-radius: 3px;
+  padding: 0.375rem 0.25rem 0.5rem;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .inlineIcon {

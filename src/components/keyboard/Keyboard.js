@@ -238,7 +238,7 @@ const Keyboard = () => {
           id="keyNameSelect"
           onChange={handleKeyNameSelect}
         >
-          <option value="none">None</option>
+          <option value="none">Off</option>
           <option value="sharps">Sharps</option>
           <option value="flats">Flats</option>
           <option value="qwerty">Qwerty</option>

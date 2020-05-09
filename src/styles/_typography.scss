@@ -123,6 +123,15 @@ h6,
   }
 }
 
+input,
+select {
+  font: 400 calcRem(15) / 1 $font-mono;
+  text-align: right;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
 p,
 .p,
 %p {

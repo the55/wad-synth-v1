@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import VolumeEnvelopeContext from '../../context/volumeEnvelopeContext/volumeEnvelopeContext';
 import OscillatorContext from '../../context/oscillatorContext/oscillatorContext';
 import { scalePow } from 'd3-scale';
+import throttle from 'lodash.throttle';
 import SliderTime from '../uiElements/SliderTime';
 import SliderLevel from '../uiElements/SliderLevel';
 import styles from './VolumeEnvelope.module.scss';
@@ -41,6 +42,7 @@ const VolumeEnvelope = () => {
 
   let newSliderScale;
   let scaledValue;
+  let invertedValue;
   const getScaledValue = (min, max, value, exponent) => {
     newSliderScale = scalePow()
       .range([min, max])
@@ -48,7 +50,29 @@ const VolumeEnvelope = () => {
       .exponent(exponent);
     return (scaledValue = newSliderScale(value));
   };
+  // Invert the scale of the number input
+  const getInvertedValue = (min, max, value, exponent) => {
+    newSliderScale = scalePow()
+      .range([min, max])
+      .domain([min, max])
+      .exponent(exponent);
+    return (invertedValue = newSliderScale.invert(value));
+  };
 
+  // Store values with useRef, so that the event handlers can access the current state
+  // Sustain State
+  // --- Create a Ref with the initial state (from a prop/context)
+  const updatedSustainRef = useRef(volumeEnvelopeSustain.scaledValue);
+  // Create a function to update the Ref. It is passed our updated value
+  const setUpdatedSustain = (updatedValue) => {
+    updatedSustainRef.current = updatedValue;
+  };
+  // --- Run the update function (and pass it the updated value) when the state changes
+  useEffect(() => {
+    setUpdatedSustain(volumeEnvelopeSustain.scaledValue);
+  }, [volumeEnvelopeSustain]);
+
+  // Event Handlers
   const handleAttack = (e) => {
     getScaledValue(
       volumeEnvelopeAttack.min,
@@ -75,27 +99,78 @@ const VolumeEnvelope = () => {
   //   setVolumeEnvelopeSustain(parseFloat(e.target.value));
   // };
 
-  const handleSustain = (e) => {
-    getScaledValue(
-      volumeEnvelopeSustain.min,
-      volumeEnvelopeSustain.max,
-      e.target.value,
-      1
-    );
-    // console.log(scaledValue);
-    setVolumeEnvelopeSustain(parseFloat(e.target.value), scaledValue);
+  // const handleSustain = (e) => {
+  //   getScaledValue(
+  //     volumeEnvelopeSustain.min,
+  //     volumeEnvelopeSustain.max,
+  //     e.target.value,
+  //     1
+  //   );
+  //   // console.log(scaledValue);
+  //   setVolumeEnvelopeSustain(parseFloat(e.target.value), scaledValue);
+  // };
+
+  const handleSustainThrottled = useRef(
+    throttle(function handleSustain(value) {
+      // let sustainValue;
+      getScaledValue(
+        volumeEnvelopeSustain.min,
+        volumeEnvelopeSustain.max,
+        value,
+        1
+      );
+      setVolumeEnvelopeSustain(Number(value), scaledValue);
+    }, 50)
+  ).current;
+  // --- Sustain Number Input
+  const handleSustainInput = (value) => {
+    if (
+      value * 0.01 <= volumeEnvelopeSustain.max &&
+      value * 0.01 >= volumeEnvelopeSustain.min &&
+      value !== ''
+    ) {
+      getInvertedValue(
+        // Invert the scale function to update the slider value
+        volumeEnvelopeSustain.min,
+        volumeEnvelopeSustain.max,
+        value * 0.01,
+        1
+      );
+      setVolumeEnvelopeSustain(value * 0.01, invertedValue);
+    } else if (value === '') {
+      setVolumeEnvelopeSustain('', '');
+    } else if (value * 0.01 > volumeEnvelopeSustain.max) {
+      setVolumeEnvelopeSustain(
+        volumeEnvelopeSustain.max,
+        volumeEnvelopeSustain.max
+      );
+    } else if (value * 0.01 < volumeEnvelopeSustain.min) {
+      setVolumeEnvelopeSustain(
+        volumeEnvelopeSustain.min,
+        volumeEnvelopeSustain.min
+      );
+    }
+  };
+  // Sustain Number Input onBlur
+  const handleSustainOnBlur = (value) => {
+    if (value === '') {
+      setVolumeEnvelopeSustain(
+        1, // Set the value to 1 if the input is empty
+        1
+      );
+    }
   };
 
-  const handleHold = (e) => {
-    getScaledValue(
-      volumeEnvelopeHold.min,
-      volumeEnvelopeHold.max,
-      e.target.value,
-      3
-    );
-    // console.log(scaledValue);
-    setVolumeEnvelopeHold(parseFloat(e.target.value), scaledValue);
-  };
+  // const handleHold = (e) => {
+  //   getScaledValue(
+  //     volumeEnvelopeHold.min,
+  //     volumeEnvelopeHold.max,
+  //     e.target.value,
+  //     3
+  //   );
+  //   // console.log(scaledValue);
+  //   setVolumeEnvelopeHold(parseFloat(e.target.value), scaledValue);
+  // };
 
   const handleRelease = (e) => {
     getScaledValue(
@@ -141,16 +216,6 @@ const VolumeEnvelope = () => {
             // disabled={disabled}
           />
 
-          {/* <SliderLevel  
-        label={'Sustain'}
-        id={'sustain'}
-        min={'0'}
-        max={'1'}
-        step={'any'}
-        value={volumeEnvelopeSustain}
-        onChange={handleSustain}
-      /> */}
-
           <SliderLevel
             label={volumeEnvelopeSustain.label}
             id={volumeEnvelopeSustain.id}
@@ -159,22 +224,16 @@ const VolumeEnvelope = () => {
             step={volumeEnvelopeSustain.step}
             sliderValue={volumeEnvelopeSustain.sliderValue}
             scaledValue={volumeEnvelopeSustain.scaledValue}
-            onChange={handleSustain}
-            // disabled={disabled}
+            // onChange={handleSustain}
             multiplier={100}
             decimal={0}
+            onChange={({ target: { value } }) => handleSustainThrottled(value)} // Destructuring e.target.value, see the handleVolumeThrottled definition for more of an explanation
+            handleNumberInput={({ target: { value } }) =>
+              handleSustainInput(value)
+            }
+            handleOnBlur={({ target: { value } }) => handleSustainOnBlur(value)}
           />
 
-          {/* <SliderTime
-        label={volumeEnvelopeHold.label}
-        id={volumeEnvelopeHold.id}
-        min={volumeEnvelopeHold.min}
-        max={volumeEnvelopeHold.max}
-        step={volumeEnvelopeHold.step}
-        sliderValue={volumeEnvelopeHold.sliderValue}
-        scaledValue={volumeEnvelopeHold.scaledValue}
-        onChange={handleHold}
-      /> */}
           <SliderTime
             label={volumeEnvelopeRelease.label}
             id={volumeEnvelopeRelease.id}
