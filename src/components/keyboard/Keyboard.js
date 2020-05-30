@@ -10,6 +10,7 @@ import OscillatorContext from '../../context/oscillatorContext/oscillatorContext
 import Wad from 'web-audio-daw';
 import Key from './Key';
 import styles from './Keyboard.module.scss';
+import Midi from "../midi/Midi";
 
 const Keyboard = () => {
   const oscillatorContext = useContext(OscillatorContext);
@@ -244,6 +245,7 @@ const Keyboard = () => {
           <option value="qwerty">Qwerty</option>
         </select>
       </label>
+      <Midi />
       <div className={`${styles.keyboardContainer}`}>
         <ul
           className={`${styles.keyboard}`}
